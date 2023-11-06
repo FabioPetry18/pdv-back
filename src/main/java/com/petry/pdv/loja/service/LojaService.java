@@ -8,7 +8,10 @@ import org.springframework.stereotype.Service;
 import com.petry.pdv.loja.entity.Loja;
 import com.petry.pdv.loja.repository.LojaRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
+@Transactional
 public class LojaService {
 	
 	@Autowired

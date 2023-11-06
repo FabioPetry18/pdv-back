@@ -8,7 +8,10 @@ import org.springframework.stereotype.Service;
 import com.petry.pdv.caixa.entity.Caixa;
 import com.petry.pdv.caixa.repository.CaixaRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
+@Transactional
 public class CaixaService {
 
 	@Autowired

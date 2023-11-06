@@ -54,7 +54,7 @@ public class ProdutoController {
 	@DeleteMapping
 	public ResponseEntity<Produto> inativate(@RequestBody Produto produto){
 		
-		Produto find = produtoService.buscarProdutoCodigoProduto(produto.getIdProduto().toString());
+		Produto find = produtoService.buscarProdutoCodigoProduto(produto.getId().toString());
 		produto.setDesativated(!find.isDesativated());
 		ResponseEntity<Produto> produtoUpd = produtoService.update(produto);
 		return produtoUpd;

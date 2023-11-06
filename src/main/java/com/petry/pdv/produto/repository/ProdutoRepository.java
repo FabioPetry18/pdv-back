@@ -12,6 +12,6 @@ import com.petry.pdv.produto.entity.Produto;
 
 @Repository
 public interface ProdutoRepository extends JpaRepository<Produto, Long>{
-	@Query(value = "SELECT * FROM PDV.PRODUTO WHERE IDPRODUTO = :produto", nativeQuery = true)
+	@Query(value = "SELECT * FROM PDV.PRODUTO WHERE ID = :produto", nativeQuery = true)
 	Produto findByID(@Param("produto") String produto);
 }

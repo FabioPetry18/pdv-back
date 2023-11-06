@@ -8,7 +8,10 @@ import org.springframework.stereotype.Service;
 import com.petry.pdv.funcionario.entity.Funcionario;
 import com.petry.pdv.funcionario.repository.FuncionarioRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
+@Transactional
 public class FuncionarioService {
 	
 	@Autowired
