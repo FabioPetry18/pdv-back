@@ -2,13 +2,20 @@ package com.petry.pdv.estoque.entity;
 
 import java.math.BigDecimal;
 
+import com.petry.pdv.funcionario.entity.Funcionario;
+import com.petry.pdv.loja.entity.Loja;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-
+import lombok.Data;
+@Data
 @Entity
 @Table(schema = "pdv",name = "estoque" )
 public class Estoque {
@@ -17,6 +24,14 @@ public class Estoque {
 	@Column(name = "idestoque")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idEstoque;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "loja_id")
+    private Loja loja;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "funcionario_id")
+    private Funcionario funcionarioCriador;
 	
 	@Column(name = "idproduto")
 	private Long idProduto;
@@ -36,54 +51,5 @@ public class Estoque {
 	@Column(name = "qtdEmbal")
 	private BigDecimal qtdEmbal;
 
-	public Long getIdEstoque() {
-		return idEstoque;
-	}
-
-	public void setIdEstoque(Long idEstoque) {
-		this.idEstoque = idEstoque;
-	}
-
-	public Long getIdProduto() {
-		return idProduto;
-	}
-
-	public void setIdProduto(Long idProduto) {
-		this.idProduto = idProduto;
-	}
-
-	public Long getIdLoja() {
-		return idLoja;
-	}
-
-	public void setIdLoja(Long idLoja) {
-		this.idLoja = idLoja;
-	}
-
-	public BigDecimal getQtd() {
-		return qtd;
-	}
-
-	public void setQtd(BigDecimal qtd) {
-		this.qtd = qtd;
-	}
-
-	public BigDecimal getQtdEmbal() {
-		return qtdEmbal;
-	}
-
-	public void setQtdEmbal(BigDecimal qtdEmbal) {
-		this.qtdEmbal = qtdEmbal;
-	}
-
-	public Estoque(Long idEstoque, Long idProduto, Long idLoja, BigDecimal qtd, BigDecimal qtdEmbal) {
-		super();
-		this.idEstoque = idEstoque;
-		this.idProduto = idProduto;
-		this.idLoja = idLoja;
-		this.qtd = qtd;
-		this.qtdEmbal = qtdEmbal;
-	}
-	public Estoque() {}	
 	
 }

@@ -11,7 +11,10 @@ import org.springframework.util.ObjectUtils;
 import com.petry.pdv.produto.entity.Produto;
 import com.petry.pdv.produto.repository.ProdutoRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
+@Transactional
 public class ProdutoService {
 	
 	@Autowired
@@ -32,7 +35,7 @@ public class ProdutoService {
 	}
 
 	public ResponseEntity<Produto> update(Produto produto) {
-	    Produto prod = repository.findByID(produto.getIdProduto().toString());
+	    Produto prod = repository.findByID(produto.getId().toString());
 	    
 	    if (ObjectUtils.isEmpty(prod)) {
 	        return new ResponseEntity<>(HttpStatus.NOT_FOUND);

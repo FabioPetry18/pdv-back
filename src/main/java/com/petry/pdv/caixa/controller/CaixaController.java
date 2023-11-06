@@ -37,7 +37,7 @@ public class CaixaController {
 	
 	@PutMapping
 	public ResponseEntity<?> update(@RequestBody Caixa cxa) {
-		if(service.getIdcxaIdFunc(cxa.getIdCaixa(), cxa.getIdFuncionario())) {
+		if(service.getIdcxaIdFunc(cxa.getId(), cxa.getIdFuncionario())) {
 			cxa.setAbertura(new Date());
 			service.update(cxa);
 			return ResponseEntity.ok(cxa);

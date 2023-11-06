@@ -34,7 +34,7 @@ public class LojaController {
 	}
 	@PutMapping
 	public ResponseEntity<?> update(@RequestBody Loja loja) {
-		if(lojaService.buscarPorId(loja.getIdloja())) {
+		if(lojaService.buscarPorId(loja.getId())) {
 			 lojaService.add(loja);
 			 return ResponseEntity.ok(loja);
 		}
@@ -44,7 +44,7 @@ public class LojaController {
 	
 	@DeleteMapping
 	public ResponseEntity<?> delete(@RequestBody Loja loja) {
-		if(lojaService.buscarPorId(loja.getIdloja())) {
+		if(lojaService.buscarPorId(loja.getId())) {
 			lojaService.delete(loja);
 			 return ResponseEntity.ok(loja);
 		}

@@ -8,7 +8,10 @@ import org.springframework.stereotype.Service;
 import com.petry.pdv.estoque.entity.Estoque;
 import com.petry.pdv.estoque.repository.EstoqueRespository;
 
+import jakarta.transaction.Transactional;
+
 @Service
+@Transactional
 public class EstoqueService {
 	
 	@Autowired
