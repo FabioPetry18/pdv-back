@@ -3,6 +3,9 @@ package com.petry.pdv.login.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.petry.pdv.login.entity.Login;
@@ -12,7 +15,7 @@ import jakarta.transaction.Transactional;
 
 @Service
 @Transactional
-public class LoginService {
+public class LoginService implements UserDetailsService{
 	
 	@Autowired
 	private LoginRepository repository;
@@ -26,4 +29,20 @@ public class LoginService {
 		return repository.save(login);
 		
 	}
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		return repository.findByUsuario(username);
+	}
+
+	
+
+//	public Login autenticar(String usuario, String senha) {
+//		Login login =  repository.findByUsuarioAndSenha(usuario, senha);
+//
+//		return login;
+
+//	}
+
+	
 }	

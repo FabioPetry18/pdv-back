@@ -1,5 +1,14 @@
 package com.petry.pdv.login.entity;
 
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.petry.pdv.cliente.entity.Cliente;
 import com.petry.pdv.funcionario.entity.Funcionario;
 import com.petry.pdv.login.UserTypes;
@@ -18,13 +27,10 @@ import lombok.Data;
 @Data
 @Entity
 @Table(schema = "pdv", name = "login")
-public class Login {
+public class Login implements UserDetails{
 	
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
 	@Column(name = "usuario")
     private String usuario;
 
@@ -41,13 +47,59 @@ public class Login {
     @Column(name = "idUser")
     private Long idUser; 
     
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idUser", referencedColumnName = "id", insertable = false, updatable = false)
-    private Cliente cliente;
+//    @JsonIgnore
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "idUser", referencedColumnName = "id", insertable = false, updatable = false)
+//    private Cliente cliente;
+//
+//    @JsonIgnore
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "idUser", referencedColumnName = "id", insertable = false, updatable = false)
+//    private Funcionario funcionario;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idUser", referencedColumnName = "id", insertable = false, updatable = false)
-    private Funcionario funcionario;
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		if(this.userType == UserTypes.ADMIN) return List.of(new SimpleGrantedAuthority("Administrador"), new SimpleGrantedAuthority("Cliente"), new SimpleGrantedAuthority("Funcionário"));
+		else if(this.userType == UserTypes.CLIENTE) return List.of(new SimpleGrantedAuthority("Cliente"), new SimpleGrantedAuthority("Funcionário"));
+		else if(this.userType == UserTypes.FUNCIONARIO) return List.of(new SimpleGrantedAuthority("Funcionário"));
+		else  return List.of(new SimpleGrantedAuthority("Funcionário"));
+	}
+
+	@Override
+	public String getPassword() {
+		// TODO Auto-generated method stub
+		return senha;
+	}
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return usuario;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return true;
+	}
    
 
 }

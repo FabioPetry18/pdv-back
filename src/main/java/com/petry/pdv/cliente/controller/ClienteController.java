@@ -17,11 +17,9 @@ public class ClienteController {
 	ClienteService service;
 	
 	@PostMapping
-	public Cliente insert(@RequestBody Cliente cliente) {
-		
-		return service.addCliente(cliente);
-		
-		
+	public Cliente insert(@RequestBody Cliente cliente) {		
+		return service.addCliente(cliente);		
 	}
+	
 	
 }

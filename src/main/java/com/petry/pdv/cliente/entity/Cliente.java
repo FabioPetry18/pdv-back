@@ -39,9 +39,7 @@ public class Cliente {
   //  @JsonIgnore
     private List<Loja> lojas;
     
-    @OneToOne(mappedBy = "cliente", fetch = FetchType.LAZY)
-    private Login login;
-
+ 
     
     
 }
