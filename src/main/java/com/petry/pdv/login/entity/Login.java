@@ -16,6 +16,8 @@ import com.petry.pdv.login.UserTypes;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -42,6 +44,7 @@ public class Login implements UserDetails{
     private String acessos;
 
     @Column(name = "userType")
+    @Enumerated(EnumType.STRING)
     private UserTypes userType ;
     
     @Column(name = "idUser")
@@ -59,10 +62,10 @@ public class Login implements UserDetails{
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		if(this.userType == UserTypes.ADMIN) return List.of(new SimpleGrantedAuthority("Administrador"), new SimpleGrantedAuthority("Cliente"), new SimpleGrantedAuthority("Funcionário"));
-		else if(this.userType == UserTypes.CLIENTE) return List.of(new SimpleGrantedAuthority("Cliente"), new SimpleGrantedAuthority("Funcionário"));
-		else if(this.userType == UserTypes.FUNCIONARIO) return List.of(new SimpleGrantedAuthority("Funcionário"));
-		else  return List.of(new SimpleGrantedAuthority("Funcionário"));
+		if(this.userType == UserTypes.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_CLIENTE"), new SimpleGrantedAuthority("ROLE_FUNCIONARIO"));
+		else if(this.userType == UserTypes.CLIENTE) return List.of(new SimpleGrantedAuthority("ROLE_CLIENTE"), new SimpleGrantedAuthority("ROLE_FUNCIONARIO"));
+		else if(this.userType == UserTypes.FUNCIONARIO) return List.of(new SimpleGrantedAuthority("ROLE_FUNCIONARIO"));
+		else  return List.of(new SimpleGrantedAuthority("ROLE_FUNCIONARIO"));
 	}
 
 	@Override
