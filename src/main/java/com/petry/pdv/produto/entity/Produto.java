@@ -1,7 +1,7 @@
 package com.petry.pdv.produto.entity;
 
 import com.petry.pdv.loja.entity.Loja;
-
+import com.petry.pdv.pedido.entity.Pedido;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,6 +26,10 @@ public class Produto {
     @JoinColumn(name = "loja_id")
     private Loja loja;
 	
+   @ManyToOne
+   @JoinColumn(name = "pedido_id")
+   private Pedido pedido;
+
 	@Column(name = "descricao")
 	private String descricao;
 	

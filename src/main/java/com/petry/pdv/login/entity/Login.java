@@ -6,26 +6,19 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.petry.pdv.cliente.entity.Cliente;
-import com.petry.pdv.funcionario.entity.Funcionario;
 import com.petry.pdv.login.UserTypes;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
+
+@CrossOrigin("*")
 @Data
 @Entity
 @Table(schema = "pdv", name = "login")
@@ -48,7 +41,7 @@ public class Login implements UserDetails{
     private UserTypes userType ;
     
     @Column(name = "idUser")
-    private Long idUser; 
+    private String idUser; 
     
 //    @JsonIgnore
 //    @OneToOne(fetch = FetchType.LAZY)

@@ -17,12 +17,10 @@ import lombok.Data;
 @Table(schema = "pdv", name = "funcionario")
 public class Funcionario {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private String id; //O id do funcionario nao eh AI, eh gerado um UUID para ele para nao dar conflito nos id do dono.
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "loja_id")
-    private Loja loja;
+	@Column(name = "idloja")
+    private Long idLoja;
 		
 	@Column(name = "nome")
 	private String nome;

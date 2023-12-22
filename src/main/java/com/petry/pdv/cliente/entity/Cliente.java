@@ -1,45 +1,34 @@
 package com.petry.pdv.cliente.entity;
 
-import java.util.List;
-
-import com.petry.pdv.login.entity.Login;
-import com.petry.pdv.loja.entity.Loja;
-
 import jakarta.persistence.Column;
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
+@Data
 @Entity
 @Table(schema = "pdv", name = "cliente")
-@Data
-public class Cliente {
-    
-
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    
-    @Column(name = "nome")
-	private String nome;
-
-    
-    
-	//quantidade de lojas que esse cliente tem direito.
-	@Column(name = "qtdlojas")
-	private Integer qtdLojas;		 	
+public class Cliente  {
 	
-    @OneToMany(mappedBy = "cliente",  fetch = FetchType.LAZY)
-  //  @JsonIgnore
-    private List<Loja> lojas;
-    
- 
-    
-    
+	@EmbeddedId
+	private ClientePk pk;
+	
+	
+	@Column(name = "nomcli")
+	private String nomeCliente;
+	
+	/*      ENDEREÇO      */
+	@Column(name = "rua" )
+	private String rua;
+	
+	@Column(name = "bairro" )
+	private String bairro;
+	
+	@Column(name = "numero" )
+	private Integer numero;
+	
+	@Column(name = "cep" )
+	private Integer cep;
 }

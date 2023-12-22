@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.petry.pdv.funcionario.entity.Funcionario;
 @Repository
-public interface FuncionarioRepository extends JpaRepository<Funcionario, Long> {
+public interface FuncionarioRepository extends JpaRepository<Funcionario, String> {
 	
 //	@Query(value = "SELECT 1 FROM PDV.FUNCIONARIO WHERE IDFUNCIONARIO = :idfunc", nativeQuery = true)
 //	Integer getfuncionarioById(@Param("idfunc")String id);

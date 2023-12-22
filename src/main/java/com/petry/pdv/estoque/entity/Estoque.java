@@ -25,14 +25,6 @@ public class Estoque {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idEstoque;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "loja_id")
-    private Loja loja;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "funcionario_id")
-    private Funcionario funcionarioCriador;
-	
 	@Column(name = "idproduto")
 	private Long idProduto;
 	
@@ -40,7 +32,7 @@ public class Estoque {
 	private Long idLoja;
 	
 	@Column(name = "idfuncionario")
-	private Long idFuncionario;
+	private String idFuncionario;
 	
 	@Column(name = "idcaixa")
 	private Long idCaixa;

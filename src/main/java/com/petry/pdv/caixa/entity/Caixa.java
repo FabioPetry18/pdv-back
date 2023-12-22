@@ -28,19 +28,18 @@ public class Caixa {
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "loja_id")
     private Loja loja;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "funcionario_id")
-    private Funcionario funcionarioAbertura;
-	
+
 	@Column(name = "dtabertura")
 	private Date abertura;
 	
 	@Column(name = "dtfechamento")
 	private Date fechamento;
 			
-	@Column(name = "idFuncionario")
-	private Long idFuncionario;
+	@Column(name = "idFuncionarioAbertura")
+	private Long idFuncionarioAbertura;
+	
+	@Column(name = "idFuncionarioFechamento")
+	private Long idFuncionarioFechamento;
 
 	
 }

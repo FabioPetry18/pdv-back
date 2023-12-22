@@ -2,7 +2,7 @@ package com.petry.pdv.loja.entity;
 
 import java.util.List;
 
-import com.petry.pdv.cliente.entity.Cliente;
+import com.petry.pdv.dono.entity.Dono;
 import com.petry.pdv.estoque.entity.Estoque;
 import com.petry.pdv.funcionario.entity.Funcionario;
 import com.petry.pdv.produto.entity.Produto;
@@ -17,6 +17,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.Data;
 @Data
 @Entity
@@ -30,19 +31,17 @@ public class Loja {
 	@Column(name = "nome")
 	private String nome;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cliente_id")
-    private Cliente cliente;
+	@Column(name = "iddono")
+	private Long idDono;
     
-	
-    @OneToMany(mappedBy = "loja", fetch = FetchType.LAZY)
+	@Transient
     private List<Produto> produtos;
     
-    @OneToMany(mappedBy = "loja", fetch = FetchType.LAZY)
-    private List<Funcionario> funcionarios;
+	@Transient 
+	private List<Funcionario> funcionarios;
     
-    @OneToMany(mappedBy = "loja", fetch = FetchType.LAZY)
-    private List<Estoque> estoques;
+	@Transient
+	private List<Estoque> estoques;
     
 //    @OneToMany(mappedBy = "loja")
 //    private List<Pedido> pedidos;
