@@ -31,4 +31,8 @@ public class Cliente  {
 	
 	@Column(name = "cep" )
 	private Integer cep;
+
+	@Column(name = "cpf" )
+	private Long cpf;
+
 }
