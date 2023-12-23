@@ -38,8 +38,11 @@ public class SecurityConfig  {
         		   .requestMatchers(HttpMethod.GET, "/estoque").hasRole("ADMIN")
         		   .requestMatchers(HttpMethod.GET, "/produto").hasRole("FUNCIONARIO")
         		   .requestMatchers(HttpMethod.POST, "/produto").hasRole("FUNCIONARIO")
-        		   .anyRequest().authenticated()
-        				   
+				   .requestMatchers(HttpMethod.POST, "/caixa").hasRole("CLIENTE")
+				   .requestMatchers(HttpMethod.GET, "/caixa").hasRole("CLIENTE")
+				   .requestMatchers(HttpMethod.POST, "/dono").hasRole("ADMIN")
+				   .requestMatchers(HttpMethod.POST, "/assinatura").hasRole("ADMIN")
+				   .anyRequest().authenticated()
 		   )
 		   .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
            .build();
@@ -53,8 +56,6 @@ public class SecurityConfig  {
     public PasswordEncoder passwordEncoder() {
     	return new BCryptPasswordEncoder();
     }
-    
-   
 
-   
+
 }

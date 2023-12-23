@@ -26,7 +26,7 @@ public class Dono {
     @Column(name = "nome")
 	private String nome;    
     
-	//quantidade de lojas que esse cliente tem direito.
+	//REMOVER quantidade de lojas e ajustar as verificações de planos com base nas quantidade de lojas (dono.getQtsLojas())
 	@Column(name = "qtdlojas")
 	private Integer qtdLojas;		 	
 	

@@ -35,4 +35,6 @@ public class Cliente  {
 	@Column(name = "cpf" )
 	private Long cpf;
 
+	@Column(name = "teste" )
+	private Long teste;
 }

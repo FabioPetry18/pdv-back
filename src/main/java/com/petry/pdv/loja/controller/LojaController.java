@@ -4,6 +4,7 @@ package com.petry.pdv.loja.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.petry.pdv.exceptions.PdvException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,12 +31,12 @@ public class LojaController {
 	
 	@Autowired
 	private LojaService lojaService;
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
 	@GetMapping
 	public List<Loja> getAll(){
 		return lojaService.getAll();
@@ -46,19 +47,22 @@ public class LojaController {
 		ResponseEntity dono = donoService.verificarPlano(loja.getIdDono());
 		if(dono.getStatusCode() == HttpStatus.OK) {
 			donoService.diminuirLojaPlano(loja.getIdDono());
-			return new ResponseEntity(lojaService.add(loja), HttpStatus.OK);			
+			return new ResponseEntity(lojaService.add(loja), HttpStatus.OK);
 		} else {
-			return new ResponseEntity(dono.getBody(), HttpStatus.OK);			
+			return new ResponseEntity(dono.getBody(), HttpStatus.OK);
 		}
 
 	}
-	
+
+
+
+
 	@PutMapping
 	public ResponseEntity update(@RequestBody Loja loja) {
-		if(lojaService.buscarPorId(loja.getId())) {			 
+		if(lojaService.buscarPorId(loja.getId())) {
 			 return new ResponseEntity(lojaService.update(loja), HttpStatus.OK);
 		}
-		
+
 		return new ResponseEntity<>("Erro ao atualizar a loja", HttpStatus.NOT_FOUND);
 	}
 	

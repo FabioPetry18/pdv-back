@@ -12,5 +12,8 @@ public interface LojaRepository extends JpaRepository<Loja, Long>{
 	
 	@Query(value = "SELECT 1 FROM PDV.LOJA WHERE ID = :idloja", nativeQuery = true)
 	Integer buscarPorId(@Param("idloja") String id);
+
+	@Query(value = "SELECT * FROM loja WHERE id = ?", nativeQuery = true)
+	Loja existsByIdLoja(Long id);
 		
 }

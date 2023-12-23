@@ -31,9 +31,13 @@ public class LojaService {
 	}
 
 	public boolean buscarPorId(Long id) {
-		
 		return repository.buscarPorId(id.toString()) == 1 ? true : false;
 	}
+
+	public Loja existsByIdLoja(Long id){
+		return repository.existsByIdLoja(id);
+	}
+
 
 	public void delete(Loja loja) {
 		 repository.delete(loja);
