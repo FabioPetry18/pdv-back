@@ -25,6 +25,11 @@ import lombok.Data;
 public class Login implements UserDetails{
 	
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@Column(name = "usuario")
     private String usuario;
@@ -55,9 +60,10 @@ public class Login implements UserDetails{
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		if(this.userType == UserTypes.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_CLIENTE"), new SimpleGrantedAuthority("ROLE_FUNCIONARIO"));
-		else if(this.userType == UserTypes.CLIENTE) return List.of(new SimpleGrantedAuthority("ROLE_CLIENTE"), new SimpleGrantedAuthority("ROLE_FUNCIONARIO"));
+		if(this.userType == UserTypes.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_CLIENTE"), new SimpleGrantedAuthority("ROLE_FUNCIONARIO"), new SimpleGrantedAuthority("ROLE_DONO"));
+		else if(this.userType == UserTypes.DONO) return List.of(new SimpleGrantedAuthority("ROLE_DONO"), new SimpleGrantedAuthority("ROLE_FUNCIONARIO"));
 		else if(this.userType == UserTypes.FUNCIONARIO) return List.of(new SimpleGrantedAuthority("ROLE_FUNCIONARIO"));
+		else if(this.userType == UserTypes.CLIENTE) return List.of(new SimpleGrantedAuthority("ROLE_CLIENTE"));
 		else  return List.of(new SimpleGrantedAuthority("ROLE_FUNCIONARIO"));
 	}
 

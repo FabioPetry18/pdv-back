@@ -20,7 +20,7 @@ public class Assinatura {
     @JoinColumn(name = "iddono")
     private Dono dono;
 
-    @Column(name = "qtdLojas")
+    @Column(name = "qtdLojas")	
     private int quantidadeLojas;
 
     @Column(name = "dtAbertura")

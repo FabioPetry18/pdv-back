@@ -25,10 +25,9 @@ public class Dono {
     
     @Column(name = "nome")
 	private String nome;    
+    @Column(name = "sobrenome")
+   	private String sobrenome;    
     
-	//REMOVER quantidade de lojas e ajustar as verificações de planos com base nas quantidade de lojas (dono.getQtsLojas())
-	@Column(name = "qtdlojas")
-	private Integer qtdLojas;		 	
 	
 	@Transient
     private List<Loja> lojas;

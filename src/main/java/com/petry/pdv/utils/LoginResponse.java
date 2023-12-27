@@ -17,5 +17,4 @@ public class LoginResponse {
 	private List<Acessos> acessos;
 	private String token;
 	
-	
 }

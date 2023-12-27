@@ -2,6 +2,7 @@ package com.petry.pdv.login;
 
 public enum UserTypes {
     CLIENTE("Cliente"),
+    DONO("Dono"),
     FUNCIONARIO("Funcionário"),
     ADMIN("Administrador");
 

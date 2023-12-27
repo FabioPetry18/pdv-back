@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.petry.pdv.login.entity.Login;
@@ -28,9 +30,13 @@ public class LoginService implements UserDetailsService{
 	public List<Login> getAll(){
 		return repository.findAll();
 	}
-	
+	public PasswordEncoder passwordEncoder(){
+		   return new BCryptPasswordEncoder();
+		 }
 	public ResponseEntity save(Login login) {
 		Optional<Login> in = repository.findById(login.getIdUser());
+		login.setSenha(passwordEncoder().encode(login.getSenha()));	
+
 		if(in.isPresent()) {
 			return new ResponseEntity(repository.save(login), HttpStatus.OK);
 		} else {

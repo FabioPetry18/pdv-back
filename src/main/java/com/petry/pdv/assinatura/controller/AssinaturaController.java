@@ -20,7 +20,6 @@ public class AssinaturaController {
 
     @PostMapping
     public Assinatura save(@RequestBody Assinatura assinatura) {
-        assinatura.setDataAbertura(new Date());
         return service.save(assinatura);
     }
 }

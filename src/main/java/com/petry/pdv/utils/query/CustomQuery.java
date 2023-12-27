@@ -73,6 +73,36 @@ public class CustomQuery {
 		
 	}
 	
+	public LoginResponse buscarInfosAdmin(String username, String token) {
+		String sql = "select usuario, user_type, login.acessos "
+					+ "from pdv.login  "
+					+ "where usuario = :user";
+		List<Object[]> response  = this.em
+				.createNativeQuery(sql)
+				.setParameter("user", username)
+				.getResultList();
+		
+		List<Acessos> acessos = new ArrayList<>();
+		LoginResponse login = new LoginResponse();
+		
+		acessos.add(new Acessos("Dono", "/dashboard/dono"));	
+
+		
+		response.forEach(p -> {
+			
+			login.setUsername(String.valueOf(p[0]));
+			login.setUserType(String.valueOf(p[1]));
+			login.setAcessos(acessos);
+			login.setToken(token);
+			
+		});
+		
+		return login;
+		
+		
+		
+	}
+	
 //	public record LoginResponseDTO(String userId, List<Loja> lojas, Integer qtdLojas, boolean isAdmin, List<Acessos> acessos ,String token) {
 
 }

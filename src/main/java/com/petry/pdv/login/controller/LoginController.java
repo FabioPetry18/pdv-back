@@ -51,9 +51,7 @@ public class LoginController {
 	private LoginRepository repository;
 	
 	
-	public PasswordEncoder passwordEncoder(){
-	   return new BCryptPasswordEncoder();
-	 }
+
 	
 	@GetMapping
 	public List<Login> getAll() {
@@ -67,14 +65,12 @@ public class LoginController {
 		//caso seja funcionario
 		if(login.getIdUser().contains("-")){
 			if(FuncionarioRepository.findById(login.getIdUser()).isPresent()) {
-				login.setSenha(passwordEncoder().encode(login.getSenha()));	
 				return  service.save(login);
 			} else {
 				return new ResponseEntity<>(new ErrorResponse("Funcionario associado não encontrado!"), HttpStatus.NOT_FOUND);
 			}
 		}if(donoRepository.findById(Long.valueOf(login.getIdUser())).isPresent()) { //caso seja dono
 
-			login.setSenha(passwordEncoder().encode(login.getSenha()));	
 			return  new ResponseEntity<>(service.save(login), HttpStatus.OK);
 		} else {
 			return new ResponseEntity<>(new ErrorResponse("Dono associado não encontrado!"), HttpStatus.NOT_FOUND);
@@ -91,7 +87,7 @@ public class LoginController {
 		
 		switch (in.getUserType()) {
 		case ADMIN: {			
-			break;
+			return new ResponseEntity<>(Customrepository.buscarInfosAdmin(in.getUsuario(), token), HttpStatus.OK);
 		}
 		case CLIENTE: {			
 			return new ResponseEntity<>(Customrepository.buscarInfosCliente(in.getUsuario(), token), HttpStatus.OK);

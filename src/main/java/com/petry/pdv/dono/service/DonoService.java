@@ -37,15 +37,15 @@ public class DonoService {
 		public ResponseEntity verificarPlano(Long id) {
 			Optional<Dono> dono = repository.findById(id);
 			if(dono.isPresent()) {
-				if(dono.get().getQtdLojas() > 0) {
+				//if(dono.get().getQtdLojas() > 0) {
 					return new ResponseEntity(new ErrorResponse("Dono com plano válido"), HttpStatus.OK);				
 				} else {
 					return new ResponseEntity(new ErrorResponse("Seu plano não permite a inclusão de mais uma loja!"), HttpStatus.NOT_ACCEPTABLE);				
 				}
-			} else {
-				return new ResponseEntity(new ErrorResponse("Dono associado não encontrado!"),  HttpStatus.NOT_ACCEPTABLE);
+		//	} else {
+			//	return new ResponseEntity(new ErrorResponse("Dono associado não encontrado!"),  HttpStatus.NOT_ACCEPTABLE);
 
-			}
+		//	}
 			 
 		}
 
@@ -53,7 +53,8 @@ public class DonoService {
 			Optional<Dono> dono = repository.findById(id);
 			if(dono.isPresent()) {
 				Dono donoObj = dono.get();
-				donoObj.setQtdLojas(donoObj.getQtdLojas() - 1);
+				//donoObj.setQtdLojas(donoObj.getQtdLojas() - 1);
+				
 			} else {
 				return;
 			}
