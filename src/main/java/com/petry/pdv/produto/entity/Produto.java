@@ -1,5 +1,7 @@
 package com.petry.pdv.produto.entity;
 
+import java.util.List;
+
 import com.petry.pdv.loja.entity.Loja;
 import com.petry.pdv.pedido.entity.Pedido;
 
@@ -10,8 +12,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.Data;
 
 @Data
@@ -22,14 +26,9 @@ public class Produto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "loja_id")
-    private Loja loja;
+	@Column(name = "idloja")
+	private Long idloja;
 	
-   @ManyToOne
-   @JoinColumn(name = "pedido_id")
-   private Pedido pedido;
-
 	@Column(name = "descricao")
 	private String descricao;
 	
@@ -41,6 +40,7 @@ public class Produto {
 	
 	@Column(name = "imagem")	
 	private byte[] imagem;
+	
 	
 	@Column(name = "desativated")
 	private boolean desativated;	

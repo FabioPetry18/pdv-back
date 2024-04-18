@@ -25,8 +25,8 @@ public class ProdutoService {
 		return prod;
 	}
 	
-	public List<Produto> getAll() {
-		List<Produto> prod =  repository.findAll();
+	public List<Produto> getAll(Long idloja) {
+		List<Produto> prod =  repository.findByIdloja(idloja);
 		return prod;
 	}
 	public Produto insert(Produto produto) {

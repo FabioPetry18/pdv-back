@@ -37,6 +37,8 @@ public class Login implements UserDetails{
     @Column(name = "senha")
     private String senha;
 
+    @Column(name = "primeiroacesso")
+    private boolean primeiroacesso;
     
     @Column(name = "acessos")
     private String acessos;

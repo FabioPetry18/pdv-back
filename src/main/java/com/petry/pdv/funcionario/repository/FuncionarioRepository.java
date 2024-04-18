@@ -6,12 +6,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.petry.pdv.funcionario.entity.Funcionario;
+import java.util.List;
+
 @Repository
 public interface FuncionarioRepository extends JpaRepository<Funcionario, String> {
-	
-//	@Query(value = "SELECT 1 FROM PDV.FUNCIONARIO WHERE IDFUNCIONARIO = :idfunc", nativeQuery = true)
-//	Integer getfuncionarioById(@Param("idfunc")String id);
-	
-//	@Query(name = "select 1 from pdv.funcionario func where func.usuario = :user and func.senha = :senha ", nativeQuery = true)
-//	Integer autenticarFuncionario(@Param("user") String user, @Param("senha") String senha);
+		List<Funcionario> findByIdLoja(Long idLoja);
 }

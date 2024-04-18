@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.petry.pdv.funcionario.entity.Funcionario;
 import com.petry.pdv.login.entity.Login;
 import com.petry.pdv.loja.entity.Loja;
 import com.petry.pdv.utils.Acessos;
@@ -25,7 +26,7 @@ public class CustomQuery {
 	
 	
 	public LoginResponse buscarInfosCliente(String username, String token) {
-		String sql = "select login.usuario, login.user_type, login.id_user, login.acessos, dono.qtdlojas, loj.id, loj.nome from pdv.login login left join pdv.dono dono ON login.id_user = dono.id  left join pdv.loja loj ON  login.id_user = loj.iddono where login.usuario = :user";
+		String sql = "select login.usuario, login.user_type, login.id_user, login.acessos, dono.qtdlojas, loj.id, loj.nome, func.id, func.nome, func.idloja, login.primeiroacesso from pdv.login login left join pdv.dono dono ON login.id_user = dono.id  left join pdv.loja loj ON  login.id_user = loj.iddono left join funcionario func on func.idloja = loj.id where login.usuario = :user";
 		List<Object[]> response  = this.em
 				.createNativeQuery(sql)
 				.setParameter("user", username)
@@ -47,22 +48,28 @@ public class CustomQuery {
 		}
 		
 		response.forEach(p -> {
+			Funcionario func = new Funcionario();
 			Loja loja = new Loja();
+			func.setId(String.valueOf(p[7]));
+			func.setNome(String.valueOf(p[8]));
+			func.setIdLoja(p[9] == null ? 0 : Long.valueOf(String.valueOf(p[9])));
 			loja.setId(Long.valueOf(p[5].toString()));
 			loja.setNome(String.valueOf(p[6]));
-			
+			loja.getFuncionarios().add(func);
 			lojas.add(loja);
 			System.out.println(String.valueOf(p[3]));
 			String acess = String.valueOf(p[3]);
 			
 			
+			login.setPrimeiroAcesso((boolean) p[10]);
 			login.setUsername(String.valueOf(p[0]));
 			login.setUserType(String.valueOf(p[1]));
-			login.setUserId(String.valueOf(p[2]));
+			login.setId(String.valueOf(p[2]));
 			//login.setAcessos(String.valueOf(response.get(0)[3]));
 			login.setAcessos(acessos);
 			login.setQtdLojas(Integer.valueOf(String.valueOf(p[4])));
 			login.setLojas(lojas);
+			login.setVisualizacaoLoja(lojas.get(0));
 			login.setToken(token);
 			
 		});

@@ -29,9 +29,11 @@ public class FuncionarioController {
 	@Autowired
 	private FuncionarioRepository repository;
 	
+
+	
 	@GetMapping
-	public List<Funcionario> getAll() {
-		return service.getAllFuncionarios();
+	public List<Funcionario> getFuncionariosByCodloja(Long codloja) {
+		return service.getFuncionariosByCodloja(codloja);
 	}
 	@PostMapping
 	public ResponseEntity save(@RequestBody Funcionario funcionario) {

@@ -24,17 +24,17 @@ public class ProdutoController {
 	@Autowired
 	private ProdutoService produtoService;
 
-	@GetMapping(path = "/{codproduto}")
-	public Produto getProdutoByCodProduto(@PathVariable String codproduto ) {
-		Produto produto = new Produto();
-		 produto = produtoService.buscarProdutoCodigoProduto(codproduto);
-		return produto;
-		
-	}
-	@GetMapping
-	public List<Produto> getAllProducts() {
+//	@GetMapping(path = "/{codproduto}")
+//	public Produto getProdutoByCodProduto(@PathVariable String codproduto ) {
+//		Produto produto = new Produto();
+//		 produto = produtoService.buscarProdutoCodigoProduto(codproduto);
+//		return produto;
+//		
+//	}
+	@GetMapping(path = "/{idloja}")
+	public List<Produto> getAllProducts(@PathVariable("idloja") Long idloja) {
 		List<Produto> produto = new ArrayList<Produto>();
-		 produto = produtoService.getAll();
+		 produto = produtoService.getAll(idloja);
 		return produto;
 		
 	}

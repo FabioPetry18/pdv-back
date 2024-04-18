@@ -1,5 +1,6 @@
 package com.petry.pdv.loja.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.petry.pdv.dono.entity.Dono;
@@ -38,7 +39,7 @@ public class Loja {
     private List<Produto> produtos;
     
 	@Transient 
-	private List<Funcionario> funcionarios;
+	private List<Funcionario> funcionarios = new ArrayList<>();
     
 	@Transient
 	private List<Estoque> estoques;

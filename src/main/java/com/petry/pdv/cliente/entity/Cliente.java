@@ -15,26 +15,11 @@ public class Cliente  {
 	@EmbeddedId
 	private ClientePk pk;
 	
-	
 	@Column(name = "nomcli")
 	private String nomeCliente;
-	
-	/*      ENDEREÇO      */
-	@Column(name = "rua" )
-	private String rua;
-	
-	@Column(name = "bairro" )
-	private String bairro;
-	
-	@Column(name = "numero" )
-	private Integer numero;
-	
-	@Column(name = "cep" )
-	private Integer cep;
 
-	@Column(name = "cpf" )
-	private Long cpf;
 
-	@Column(name = "teste" )
-	private Long teste;
+
+	@Column(name = "email" )
+	private String email;
 }

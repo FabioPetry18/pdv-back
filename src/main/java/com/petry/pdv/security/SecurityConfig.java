@@ -36,14 +36,29 @@ public class SecurityConfig  {
            .authorizeHttpRequests(authorize -> authorize
         		   .requestMatchers(HttpMethod.POST, "/login").permitAll()
         		   .requestMatchers(HttpMethod.POST, "/login/autenticar").permitAll()
+        		   .requestMatchers(HttpMethod.GET, "/pedido/sse").permitAll()
+        		   .requestMatchers(HttpMethod.GET, "/pedido/sse/*").permitAll()
+        		   
+        		   .requestMatchers(HttpMethod.GET, "/pedido/**").hasRole("DONO")
+        		   .requestMatchers(HttpMethod.PUT, "/pedido/*").hasRole("DONO")
+        		   .requestMatchers(HttpMethod.DELETE, "/pedido/*").hasRole("DONO")
+        		   .requestMatchers(HttpMethod.POST, "/pedido/*").hasRole("DONO")
+        		   .requestMatchers(HttpMethod.GET, "/login/autenticar").hasRole("DONO")
+
+
         		   .requestMatchers(HttpMethod.GET, "/estoque").hasRole("ADMIN")
+        		   .requestMatchers(HttpMethod.POST, "/assinatura").hasRole("ADMIN")
+        		   .requestMatchers(HttpMethod.POST, "/dono").hasRole("ADMIN")
+        		   .requestMatchers(HttpMethod.POST, "/dono/acesso").hasRole("ADMIN")
+        		   .requestMatchers(HttpMethod.GET, "/login/autenticar").hasRole("ADMIN")
+
         		   .requestMatchers(HttpMethod.GET, "/produto").hasRole("FUNCIONARIO")
+        		   .requestMatchers(HttpMethod.GET, "/produto/*").hasRole("FUNCIONARIO")
         		   .requestMatchers(HttpMethod.POST, "/produto").hasRole("FUNCIONARIO")
+        		   .requestMatchers(HttpMethod.GET, "/login/autenticar").hasRole("FUNCIONARIO")
+
 				   .requestMatchers(HttpMethod.POST, "/caixa").hasRole("CLIENTE")
 				   .requestMatchers(HttpMethod.GET, "/caixa").hasRole("CLIENTE") 
-				   .requestMatchers(HttpMethod.POST, "/dono").hasRole("ADMIN")
-				   .requestMatchers(HttpMethod.POST, "/dono/acesso").hasRole("ADMIN")
-				   .requestMatchers(HttpMethod.POST, "/assinatura").hasRole("ADMIN")
 				   .anyRequest().authenticated()
 		   )
 		   .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
@@ -64,7 +79,7 @@ public class SecurityConfig  {
     public CorsConfigurationSource corsConfigurationSource() {
        CorsConfiguration corsConfiguration = new CorsConfiguration();
        corsConfiguration.setAllowCredentials(true);
-       corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+       corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
        corsConfiguration.setAllowedHeaders(Arrays.asList("Origin", "Access-Control-Allow-Origin", "Content-Type",
            "Accept", "Authorization", "Origin, Accept", "X-Requested-With",
            "Access-Control-Request-Method", "Access-Control-Request-Headers"));

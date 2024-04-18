@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.petry.pdv.login.entity.AtualizarSenha;
 import com.petry.pdv.login.entity.Login;
 import com.petry.pdv.login.repository.LoginRepository;
 import com.petry.pdv.utils.ErrorResponse;
@@ -38,13 +39,24 @@ public class LoginService implements UserDetailsService{
 		login.setSenha(passwordEncoder().encode(login.getSenha()));	
 
 		if(in.isPresent()) {
-			return new ResponseEntity(repository.save(login), HttpStatus.OK);
-		} else {
 			return new ResponseEntity(new ErrorResponse("Usuário já cadastrado!"), HttpStatus.CONFLICT);
+		} else {
+			return new ResponseEntity(repository.save(login), HttpStatus.OK);
 
 		}
 		
+		 
+	}
+	public ResponseEntity updateSenha(AtualizarSenha user) {
 		
+		if(repository.existsById(user.getUsuario())) {
+			Optional<Login> login = repository.findById(user.getUsuario());
+			login.get().setSenha(passwordEncoder().encode(user.getSenha()));
+			login.get().setPrimeiroacesso(false);
+			return new ResponseEntity<>(repository.save(login.get()), HttpStatus.OK);			
+		}
+		
+		return new ResponseEntity<>(user, HttpStatus.BAD_REQUEST);			
 	}
 
 	@Override

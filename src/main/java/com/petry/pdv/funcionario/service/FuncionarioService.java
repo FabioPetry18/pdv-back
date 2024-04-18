@@ -28,6 +28,11 @@ public class FuncionarioService {
 	}
 
 
+	public List<Funcionario> getFuncionariosByCodloja(Long codloja) {
+		return repository.findByIdLoja(codloja);
+	}
+
+
 //	public boolean findById(Long idFuncionario) {
 //		return repository.getfuncionarioById(idFuncionario.toString()) == 1 ? true : false;
 //	}

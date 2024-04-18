@@ -4,6 +4,7 @@ public enum UserTypes {
     CLIENTE("Cliente"),
     DONO("Dono"),
     FUNCIONARIO("Funcionário"),
+    FORNECEDOR("Fornecedor"),
     ADMIN("Administrador");
 
     private String label;

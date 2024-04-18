@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -55,7 +56,7 @@ public class DonoController {
 			assinaturaService.save(assinatura);
 			//CRIACAO DO LOGIN
 			Login login = donoAssinaturaToLogin(dono, donoCreate);
-			loginService.save(login);
+			ResponseEntity logSave= loginService.save(login);
 			return new ResponseEntity(new ErrorResponse("Dono, assinatura e login criado - usuario: " + login.getUsuario() + " senha: " + dono.getSenha()), HttpStatus.OK);					
 		} catch (Exception e) {
 			return new ResponseEntity(new ErrorResponse("erro ao realizar cadastro: " + e.getLocalizedMessage()), HttpStatus.BAD_REQUEST);					
@@ -67,7 +68,7 @@ public class DonoController {
 	
 	
 	@GetMapping
-	public  List<Dono> getAll() {
+	public  List<DonoAssinatura> getAll() {
 		return service.getAll();
 	}
 	
@@ -86,13 +87,14 @@ public class DonoController {
 		assis.setDono(donoCreate);
 		assis.setQuantidadeLojas(dto.getQtdLojas());
 		assis.setStatus(true);
+		
 		return assis;
 		
 	}
 	private Dono donoAssinaturaToDono(DonoAssinatura dto) {
 		Dono dono = new Dono();
 		dono.setNome(dto.getNome());
-		dono.setNome(dto.getSobrenome());
+		dono.setSobrenome(dto.getSobrenome());
 		return dono;
 	}
 	
