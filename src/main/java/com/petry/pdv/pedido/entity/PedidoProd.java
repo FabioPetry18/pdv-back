@@ -1,9 +1,11 @@
 package com.petry.pdv.pedido.entity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-import com.petry.pdv.pedido.dto.PesquisaPedidoResponse;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.petry.pdv.pedido.dto.PedidoProduto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
@@ -14,9 +16,8 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(schema = "pdv", name = "pedido")
-public class Pedido {
-	
+@Table(schema = "pdv", name = "pedidoprod")
+public class PedidoProd {
 	
 	/*
 	 * STATUS PEDIDO
@@ -28,10 +29,21 @@ public class Pedido {
 	 * */
 	
 	@EmbeddedId
-    private PedidoPK id;
+    private PedidoProdPK id;
+
 	
+
 	@Transient
-	private List<PesquisaPedidoResponse> produtos;
+	private List<PedidoProduto> produto;
+	
+	@Column(name = "qtdProduto" )
+    private BigDecimal qtd; 
+	
+	@Column(name = "idlojaentrega" )
+	private Long idLojaEntrega; 
+	
+	@Column(name = "idlojaproduto" )
+	private Long idLojaProduto; 
 	
 	@Column(name = "dtpedido" )
 	private Date dtpedido; 
@@ -42,8 +54,8 @@ public class Pedido {
 	@Column(name = "idendereco" )
 	private Long idEndereco; 
 	
-//	@Column(name = "dpi" )
-//	private BigDecimal dpi;
+	@Column(name = "dpi" )
+	private BigDecimal dpi;
 	
 	@Column(name = "status" )
 	private int status;	
@@ -53,7 +65,6 @@ public class Pedido {
 	
 	@Column(name = "idformapagamento" )
 	private Integer idFormaPagamento;
-	
 	
 
 }

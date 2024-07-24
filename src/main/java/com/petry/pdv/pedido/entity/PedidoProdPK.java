@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Embeddable
 @Data
-public class PedidoPK implements Serializable {
+public class PedidoProdPK implements Serializable {
 	
     /**
 	 * 
@@ -19,9 +19,12 @@ public class PedidoPK implements Serializable {
     @Column(name = "numpedido")
     private Long numeroPedido;
 
+    @Column(name = "codproduto")
+    private Integer codproduto;
+    
 	@Column(name = "idlojapedido" )
 	private Long idlojaPedido;
-	
+	 
     
 
 }

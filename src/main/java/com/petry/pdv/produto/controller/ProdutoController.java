@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.petry.pdv.produto.entity.Produto;
+import com.petry.pdv.produto.entity.ProdutoRequest;
 import com.petry.pdv.produto.service.ProdutoService;
 
 @RestController
@@ -36,13 +37,11 @@ public class ProdutoController {
 		List<Produto> produto = new ArrayList<Produto>();
 		 produto = produtoService.getAll(idloja);
 		return produto;
-		
 	}
 	
 	@PostMapping
-	public Produto insert(@RequestBody Produto produto){
-		produto = produtoService.insert(produto);
-		return produto;
+	public Produto insert(@RequestBody ProdutoRequest produto){
+		return produtoService.insert(produto);
 		
 	}
 	@PutMapping

@@ -1,4 +1,4 @@
-package com.petry.pdv.pedido.entity;
+package com.petry.pdv.pedido.dto;
 
 import java.math.BigDecimal;
 
@@ -10,10 +10,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PedidoProduto {
-
 	private Integer codproduto;
+	private String descricao;
 	private BigDecimal qtd;
-	private Integer idLojaProduto;
+	private Long idLojaProduto;
 	private Long idLojaEntrega;
 	private BigDecimal dpi;
 

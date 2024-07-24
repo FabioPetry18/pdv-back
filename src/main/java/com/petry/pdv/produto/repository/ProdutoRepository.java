@@ -14,8 +14,12 @@ import java.util.List;
 
 @Repository
 public interface ProdutoRepository extends JpaRepository<Produto, Long>{
-	@Query(value = "SELECT * FROM PDV.PRODUTO WHERE ID = :produto", nativeQuery = true)
+	@Query(value = "SELECT * FROM PDV.PRODUTO WHERE codproduto = :produto", nativeQuery = true)
 	Produto findByID(@Param("produto") String produto);
 	
+	@Query(value = "SELECT * FROM PDV.PRODUTO WHERE idloja = :idloja", nativeQuery = true)
 	List<Produto> findByIdloja(Long idloja);
+	
+	@Query(value = "SELECT IFNULL(MAX(codproduto), 0) AS ultimo_numproduto FROM produto WHERE idloja = ?1", nativeQuery = true)
+	Long getUltimoIndexProduto(Long idloja);
 }

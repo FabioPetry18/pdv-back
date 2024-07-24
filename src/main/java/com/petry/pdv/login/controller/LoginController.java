@@ -1,12 +1,15 @@
 package com.petry.pdv.login.controller;
 
 import java.util.List;
+import java.util.UUID;
+
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -60,12 +63,14 @@ public class LoginController {
 	@Autowired
 	private LoginRepository repository;
 	
+	@Autowired
+	private  KafkaTemplate<String, String> kafkaTemplate;
+	
 	
 
 	
 	@GetMapping
 	public List<Login> getAll() {
-		
 		return service.getAll();
 		
 	}
@@ -119,6 +124,8 @@ public class LoginController {
 			return new ResponseEntity<>(Customrepository.buscarInfosAdmin(in.getUsuario(), token), HttpStatus.OK);
 		}
 		case DONO: {			
+			LoginResponse re = Customrepository.buscarInfosCliente(in.getUsuario(), token);
+			kafkaTemplate.send("login-dono-topic",UUID.randomUUID().toString(), "Produzido: " + re.getUsername());
 			return new ResponseEntity<>(Customrepository.buscarInfosCliente(in.getUsuario(), token), HttpStatus.OK);
 		}
 		case FUNCIONARIO: {

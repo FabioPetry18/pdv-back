@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import com.petry.pdv.produto.entity.Produto;
+import com.petry.pdv.produto.entity.ProdutoPK;
+import com.petry.pdv.produto.entity.ProdutoRequest;
 import com.petry.pdv.produto.repository.ProdutoRepository;
 
 import jakarta.transaction.Transactional;
@@ -29,9 +31,20 @@ public class ProdutoService {
 		List<Produto> prod =  repository.findByIdloja(idloja);
 		return prod;
 	}
-	public Produto insert(Produto produto) {
-		Produto prod =  repository.save(produto);
-		return prod;
+	public Produto insert(ProdutoRequest produto) {
+		Long codprod = repository.getUltimoIndexProduto(produto.getIdloja()) + 1;
+		Produto prod = new Produto();
+		ProdutoPK pk = new ProdutoPK();
+		pk.setCodproduto(codprod);
+		pk.setIdloja(produto.getIdloja());
+		prod.setDesativated(false);
+		prod.setDescricao(produto.getDescricao());
+		prod.setDescricaoCompl(produto.getDescricaoCompl());
+		prod.setEan(produto.getEan());
+		prod.setId(pk);
+		prod.setImagem(produto.getImagem());
+		Produto prodSave =  repository.save(prod);
+		return prodSave;
 	}
 
 	public ResponseEntity<Produto> update(Produto produto) {

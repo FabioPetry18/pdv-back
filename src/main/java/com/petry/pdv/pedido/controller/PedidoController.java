@@ -1,6 +1,5 @@
 package com.petry.pdv.pedido.controller;
 
-import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.petry.pdv.pedido.entity.Pedido;
 import com.petry.pdv.pedido.entity.PedidoInseridoEvent;
+import com.petry.pdv.pedido.entity.PedidoProd;
 import com.petry.pdv.pedido.service.PedidoService;
 
 import reactor.core.publisher.Flux;
@@ -35,19 +35,19 @@ public class PedidoController {
 	private PedidoService service;
 	
 	@PutMapping
-	public ResponseEntity confirmarPedido(@RequestBody Pedido pedido) {
+	public ResponseEntity confirmarPedido(@RequestBody PedidoProd pedido) {
 		
 		return service.confirmPedido(pedido);
 		
 	}
 	@PostMapping
-	public ResponseEntity insertPedidoLoja(@RequestBody Pedido pedido) {
+	public ResponseEntity insertPedidoLoja(@RequestBody PedidoProd pedido) {
 		
 		return service.savepedidoLoja(pedido);
 		
 	}
 	@DeleteMapping
-	public ResponseEntity cancelarPedidoLoja(@RequestBody Pedido pedido) {
+	public ResponseEntity cancelarPedidoLoja(@RequestBody PedidoProd pedido) {
 		return service.inativarPedido(pedido);
 
 	}
