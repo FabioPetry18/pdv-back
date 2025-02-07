@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.petry.pdv.assinatura.entity.Assinatura;
 import com.petry.pdv.assinatura.service.AssinaturaService;
-import com.petry.pdv.dono.entity.Dono;
+import com.petry.pdv.dono.entity.Proprietario;
 import com.petry.pdv.dono.entity.DonoAssinatura;
 import com.petry.pdv.dono.repository.DonoRepository;
 import com.petry.pdv.utils.ErrorResponse;
@@ -30,14 +30,12 @@ public class DonoService {
 	AssinaturaService assinaturaService;
 	
 	
-		public Dono addDono(Dono dono) {
-		
-			return repository.save(dono);
-		
+		public Proprietario save(Proprietario dono) {
+			return repository.saveAndFlush(dono);
 		}
 
 		public List<DonoAssinatura> getAll() {
-			List<Dono> dono = repository.findAll();
+			List<Proprietario> dono = repository.findAll();
 			List<DonoAssinatura> donAssinaturaList = new ArrayList<>();
 			Assinatura assinatura = new Assinatura();
 			
@@ -45,7 +43,7 @@ public class DonoService {
 			return donAssinaturaList;
 		}
 		
-		private void preencherInfoDono(List<Dono> donoList, List<DonoAssinatura> donAssinatura,  Assinatura assinatura) {
+		private void preencherInfoDono(List<Proprietario> donoList, List<DonoAssinatura> donAssinatura,  Assinatura assinatura) {
 			donoList.forEach(dono -> {				
 				Assinatura assinaturaResponse = assinaturaService.getAssinaturaByDono(dono);
 				if(assinaturaResponse != null ) {	
@@ -54,7 +52,7 @@ public class DonoService {
 					donoassinatura.setSobrenome(dono.getSobrenome());
 					donoassinatura.setDataAbertura(formatData(assinaturaResponse.getDataAbertura()));
 					donoassinatura.setDataUltimoPagamento(assinaturaResponse.getDataUltimoPagamento() == null ? "-" : formatData(assinaturaResponse.getDataUltimoPagamento()));
-					donoassinatura.setQtdLojas(assinaturaResponse.getQuantidadeLojas());
+					donoassinatura.setQtdLojas(assinaturaResponse.getQtdLojas());
 					donoassinatura.setStatus(assinaturaResponse.isStatus() ? "Ativo" : "Inativo");
 					donAssinatura.add(donoassinatura); 
 				}
@@ -66,11 +64,11 @@ public class DonoService {
 		        String dataFormatada = sdf.format(data);
 		        return dataFormatada;
 		}
-		public Optional<Dono> findby() {
+		public Optional<Proprietario> findbyId() {
 			return repository.findById(Long.valueOf(1));
 		}
 		public ResponseEntity verificarPlano(Long id) {
-			Optional<Dono> dono = repository.findById(id);
+			Optional<Proprietario> dono = repository.findById(id);
 			if(dono.isPresent()) {
 				//if(dono.get().getQtdLojas() > 0) {
 					return new ResponseEntity(new ErrorResponse("Dono com plano válido"), HttpStatus.OK);				
@@ -85,9 +83,9 @@ public class DonoService {
 		}
 
 		public void diminuirLojaPlano(Long id) {
-			Optional<Dono> dono = repository.findById(id);
+			Optional<Proprietario> dono = repository.findById(id);
 			if(dono.isPresent()) {
-				Dono donoObj = dono.get();
+				Proprietario donoObj = dono.get();
 				//donoObj.setQtdLojas(donoObj.getQtdLojas() - 1);
 				
 			} else {

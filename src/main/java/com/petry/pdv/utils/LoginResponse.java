@@ -12,6 +12,8 @@ public class LoginResponse {
 
 	private String id;
 	private String username;
+	private String nome;
+	private String sobrenome;
 	private List<Loja> lojas;
 	private Loja visualizacaoLoja;
 	private Integer qtdLojas;
@@ -19,6 +21,6 @@ public class LoginResponse {
 	private List<Acessos> acessos;
 	private List<Funcionario> funcionarios;
 	private String token;
-	private boolean primeiroAcesso;
+	private String primeiroAcesso;
 	
 }

@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Repository;
 
-import com.petry.pdv.pedido.dto.PesquisaPedidoResponse;
+import com.petry.pdv.pedido.dto.ProdutoResponse;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -19,16 +19,10 @@ public class GeralResporitory {
 	private EntityManager em;
 	private Query query;
 	
-	public List<PesquisaPedidoResponse> getByIdlojaAndNomeProduto(Integer lojaPedido, Integer status){
+	public List<ProdutoResponse> getByIdlojaAndNumeroPedido(Integer lojaPedido, Long numeroPedido){
 		StringBuilder sb = new StringBuilder();			
 		sb.append(" SELECT ");
-		sb.append("		 prod.numpedido, ");
-		sb.append("		produto.descricao, ");
-		sb.append("		prod.qtd_produto, ");
-		sb.append("		produto.codproduto, ");
-		sb.append("		CONCAT(ende.cep,',',ende.bairro,',',ende.rua,', nº ',ende.numero), ");
-		sb.append("		cli.nomcli,	 ");
-		sb.append("		prod.dtpedido	 ");
+		sb.append("		* ");
 		sb.append(" FROM ");
 		sb.append("	 pedidoprod prod ");
 		sb.append("  INNER JOIN  ");
@@ -46,20 +40,14 @@ public class GeralResporitory {
 		
 		query = this.em.createNativeQuery(sb.toString());
 		query.setParameter("lojaPedido", lojaPedido);
-		query.setParameter("status", status);
 
 		List<Object[]> result = query.getResultList();
-		List<PesquisaPedidoResponse> list = new ArrayList<>();
+		List<ProdutoResponse> list = new ArrayList<>();
 		
 		return result.stream().map(p -> {
-			PesquisaPedidoResponse dto = new PesquisaPedidoResponse();
-			dto.setNumpedido(Long.valueOf(String.valueOf(p[0])));
+			ProdutoResponse dto = new ProdutoResponse();
 			dto.setDescricao(String.valueOf(p[1]));
-			dto.setQtd(BigDecimal.valueOf(Double.valueOf(String.valueOf(p[2]))));
-			dto.setCodproduto(Long.valueOf(String.valueOf(p[3])));
-			dto.setEndereco(String.valueOf(p[4]));
-			dto.setNomCli(String.valueOf(p[5]));
-			dto.setDtPedido(String.valueOf(p[6]));
+		
 			return dto;
 		}).collect(Collectors.toList());
 		

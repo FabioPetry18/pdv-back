@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.petry.pdv.pedido.dto.PedidoProduto;
 import com.petry.pdv.pedido.dto.PedidoResponse;
-import com.petry.pdv.pedido.dto.PesquisaPedidoResponse;
+import com.petry.pdv.pedido.dto.ProdutoResponse;
 import com.petry.pdv.pedido.entity.Pedido;
 import com.petry.pdv.pedido.entity.PedidoInseridoEvent;
 import com.petry.pdv.pedido.entity.PedidoPK;
@@ -56,9 +56,9 @@ public class PedidoService {
 	    List<Pedido> pedido = pedRepository.getByIdloja(codloja, status);
 	    PageRequest paginacao = PageRequest.of(page, size, Sort.Direction.DESC, "numpedido");
 	    
-	    List<PesquisaPedidoResponse> produtos = geralRepository.getByIdlojaAndNomeProduto(codloja, status);	    	
+	    List<ProdutoResponse> produtos = geralRepository.getByIdlojaAndNumeroPedido(codloja, 1L);	    	
 	   for(Pedido ped : pedido) {		   
-		   ped.setProdutos(produtos.stream().filter(prod-> ped.getId().getNumeroPedido() == prod.getNumpedido()).collect(Collectors.toList()));
+		   ped.setProdutos(produtos);
 	   }
 	   
 	    return new ResponseEntity<>(pedido, HttpStatus.OK);

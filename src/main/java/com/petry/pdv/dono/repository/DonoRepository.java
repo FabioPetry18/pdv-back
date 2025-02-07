@@ -5,13 +5,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.petry.pdv.dono.entity.Dono;
+import com.petry.pdv.dono.entity.Proprietario;
 
 @Repository
-public interface DonoRepository extends JpaRepository<Dono, Long> {
+public interface DonoRepository extends JpaRepository<Proprietario, Long> {
 	
-	//@Query(name = "SELECT * FROM PDV.CLIENTE  WHERE USUARIO = :user AND SENHA = :senha ", nativeQuery = true)
-	//Cliente findByUsuarioAndSenha(@Param("user") String user, @Param("senha") String senha);
+	@Query(value = "SELECT COUNT(*) > 0 FROM PDV.DONO do INNER JOIN PDV.ASSINATURA assi ON assi.iddono = do.iddono where do.iddono = ?1", nativeQuery = true)
+	Integer existsLojasAssociatesDono(Long donoId);
+	
 	
 	
 }

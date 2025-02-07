@@ -1,6 +1,6 @@
 package com.petry.pdv.configuracao.entity;
 
-import com.petry.pdv.dono.entity.Dono;
+import com.petry.pdv.dono.entity.Proprietario;
 import com.petry.pdv.loja.entity.Loja;
 import jakarta.persistence.*;
 import lombok.Data;

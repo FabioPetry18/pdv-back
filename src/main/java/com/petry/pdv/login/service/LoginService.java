@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import com.petry.pdv.login.entity.AtualizarSenha;
 import com.petry.pdv.login.entity.Login;
 import com.petry.pdv.login.repository.LoginRepository;
+import com.petry.pdv.utils.Constants;
 import com.petry.pdv.utils.ErrorResponse;
 
 import jakarta.transaction.Transactional;
@@ -52,7 +53,7 @@ public class LoginService implements UserDetailsService{
 		if(repository.existsById(user.getUsuario())) {
 			Optional<Login> login = repository.findById(user.getUsuario());
 			login.get().setSenha(passwordEncoder().encode(user.getSenha()));
-			login.get().setPrimeiroacesso(false);
+			login.get().setPrimeiroacesso(Constants.FlagSimOuNao.NAO);
 			return new ResponseEntity<>(repository.save(login.get()), HttpStatus.OK);			
 		}
 		

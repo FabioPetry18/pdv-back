@@ -1,37 +1,50 @@
 package com.petry.pdv.assinatura.entity;
 
-import com.petry.pdv.dono.entity.Dono;
-import com.petry.pdv.loja.entity.Loja;
-import jakarta.persistence.*;
-import lombok.Data;
-
 import java.util.Date;
+
+import com.petry.pdv.dono.entity.Proprietario;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
 @Table(schema = "pdv", name = "assinatura")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Assinatura {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "iddono")
-    private Dono dono;
-
+    
     @Column(name = "qtdLojas")	
-    private int quantidadeLojas;
+    private int qtdLojas;
 
     @Column(name = "dtAbertura")
-    private Date dataAbertura;
+    private Date dataAbertura = new Date();
 
     @Column(name = "dtFechamento")
     private Date dataFechamento;
 
     @Column(name = "dtUltimoMes")
-    private Date dataUltimoPagamento;
+    private Date dataUltimoPagamento; // inicio e fechamento do plano
 
-    @Column(name = "status")
+    @Column(name = "status", columnDefinition = "CHAR(1) DEFAULT 'N' CHECK (status IN ('S', 'N'))", nullable = false)
     private boolean status;
+    
+ 
+    @OneToOne(mappedBy = "assinatura")
+    private Proprietario proprietario;
 }

@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
@@ -17,8 +18,6 @@ public class Cliente  {
 	
 	@Column(name = "nomcli")
 	private String nomeCliente;
-
-
 
 	@Column(name = "email" )
 	private String email;

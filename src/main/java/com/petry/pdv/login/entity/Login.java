@@ -8,6 +8,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import com.petry.pdv.dono.entity.Proprietario;
+import com.petry.pdv.funcionario.entity.Funcionario;
 import com.petry.pdv.login.UserTypes;
 
 import jakarta.persistence.Column;
@@ -15,19 +17,17 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
 @CrossOrigin("*")
-@Data
+	@Data
 @Entity
-@Table(schema = "pdv", name = "login")
+@Table(schema = "pdv", name = "login") 
 public class Login implements UserDetails{
 	
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -37,8 +37,8 @@ public class Login implements UserDetails{
     @Column(name = "senha")
     private String senha;
 
-    @Column(name = "primeiroacesso")
-    private boolean primeiroacesso;
+    @Column(name = "primeiroacesso", columnDefinition = "CHAR(1) DEFAULT 'N' CHECK (primeiroacesso IN ('S', 'N'))", nullable = false)
+    private String  primeiroacesso;
     
     @Column(name = "acessos")
     private String acessos;
@@ -47,19 +47,12 @@ public class Login implements UserDetails{
     @Enumerated(EnumType.STRING)
     private UserTypes userType ;
     
-    @Column(name = "idUser")
-    private String idUser; 
-    
-//    @JsonIgnore
-//    @OneToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "idUser", referencedColumnName = "id", insertable = false, updatable = false)
-//    private Cliente cliente;
-//
-//    @JsonIgnore
-//    @OneToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "idUser", referencedColumnName = "id", insertable = false, updatable = false)
-//    private Funcionario funcionario;
+    @OneToOne(mappedBy = "login")
+    private Proprietario proprietario;
 
+    @OneToOne(mappedBy = "login")
+    private Funcionario funcionario;
+    
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		if(this.userType == UserTypes.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_CLIENTE"), new SimpleGrantedAuthority("ROLE_FUNCIONARIO"), new SimpleGrantedAuthority("ROLE_DONO"));

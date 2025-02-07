@@ -16,4 +16,4 @@ public interface LoginRepository extends JpaRepository<Login, String>{
 	UserDetails findByUsuario(String login);
 	
 	@Query(name = "select * from pdv.login where usuario = ?1", nativeQuery = true)
-    Login findLoginByUsuario(String teste);}
+    Login findLoginByUsuario(String user);}

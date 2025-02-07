@@ -3,7 +3,7 @@ package com.petry.pdv.pedido.entity;
 import java.util.Date;
 import java.util.List;
 
-import com.petry.pdv.pedido.dto.PesquisaPedidoResponse;
+import com.petry.pdv.pedido.dto.ProdutoResponse;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
@@ -31,7 +31,7 @@ public class Pedido {
     private PedidoPK id;
 	
 	@Transient
-	private List<PesquisaPedidoResponse> produtos;
+	private List<ProdutoResponse> produtos;
 	
 	@Column(name = "dtpedido" )
 	private Date dtpedido; 

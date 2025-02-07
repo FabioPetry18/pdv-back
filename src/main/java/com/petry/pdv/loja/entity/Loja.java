@@ -3,7 +3,7 @@ package com.petry.pdv.loja.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.petry.pdv.dono.entity.Dono;
+import com.petry.pdv.dono.entity.Proprietario;
 import com.petry.pdv.estoque.entity.Estoque;
 import com.petry.pdv.funcionario.entity.Funcionario;
 import com.petry.pdv.produto.entity.Produto;

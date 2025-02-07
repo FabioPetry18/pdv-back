@@ -2,6 +2,8 @@ package com.petry.pdv.funcionario.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -10,7 +12,8 @@ import lombok.Data;
 @Table(schema = "pdv", name = "funcionario")
 public class Funcionario {
 	@Id
-	private String id; //O id do funcionario nao eh AI, eh gerado um UUID para ele para nao dar conflito nos id do dono.
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private String id; 
 	
 	@Column(name = "idloja")
     private Long idLoja;

@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.petry.pdv.dono.entity.Dono;
+import com.petry.pdv.dono.entity.Proprietario;
 import com.petry.pdv.loja.entity.Loja;
 import com.petry.pdv.loja.repository.LojaRepository;
 

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.petry.pdv.dono.entity.Dono;
+import com.petry.pdv.dono.entity.Proprietario;
 import com.petry.pdv.dono.repository.DonoRepository;
 import com.petry.pdv.dono.service.DonoService;
 import com.petry.pdv.loja.entity.Loja;

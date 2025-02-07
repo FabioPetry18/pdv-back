@@ -9,15 +9,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PesquisaPedidoResponse {
-	private Long numpedido;
-	
+public class ProdutoResponse {
+	private Long idProduto;
+	private Long idLoja;
+	private Integer desativated;
 	private String descricao;	
-	private Long codproduto;
-	private BigDecimal qtd;
-	private String produtos;
-	private String endereco;
-	private String nomCli;
-	private String dtPedido;
-
+	private String descricaocompl;
+	private String ean;
+	private String img;
 }

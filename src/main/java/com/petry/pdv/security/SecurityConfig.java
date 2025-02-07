@@ -38,6 +38,10 @@ public class SecurityConfig  {
         		   .requestMatchers(HttpMethod.POST, "/login/autenticar").permitAll()
         		   .requestMatchers(HttpMethod.GET, "/pedido/sse").permitAll()
         		   .requestMatchers(HttpMethod.GET, "/pedido/sse/*").permitAll()
+        		   .requestMatchers(HttpMethod.GET, "/log").permitAll()
+        		   
+        		   .requestMatchers(HttpMethod.GET, "/pedido/**").hasRole("DONO")
+
         		   
         		   .requestMatchers(HttpMethod.GET, "/pedido/**").hasRole("DONO")
         		   .requestMatchers(HttpMethod.PUT, "/pedido/*").hasRole("DONO")
@@ -47,7 +51,7 @@ public class SecurityConfig  {
 
 
         		   .requestMatchers(HttpMethod.GET, "/estoque").hasRole("ADMIN")
-        		   .requestMatchers(HttpMethod.POST, "/assinatura").hasRole("ADMIN")
+        		   .requestMatchers(HttpMethod.POST, "/assinatura").permitAll()
         		   .requestMatchers(HttpMethod.POST, "/dono").hasRole("ADMIN")
         		   .requestMatchers(HttpMethod.POST, "/dono/acesso").hasRole("ADMIN")
         		   .requestMatchers(HttpMethod.GET, "/login/autenticar").hasRole("ADMIN")
@@ -79,7 +83,7 @@ public class SecurityConfig  {
     public CorsConfigurationSource corsConfigurationSource() {
        CorsConfiguration corsConfiguration = new CorsConfiguration();
        corsConfiguration.setAllowCredentials(true);
-       corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
+       corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
        corsConfiguration.setAllowedHeaders(Arrays.asList("Origin", "Access-Control-Allow-Origin", "Content-Type",
            "Accept", "Authorization", "Origin, Accept", "X-Requested-With",
            "Access-Control-Request-Method", "Access-Control-Request-Headers"));

@@ -1,10 +1,6 @@
 package com.petry.pdv.login.controller;
 
 import java.util.List;
-import java.util.UUID;
-
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,11 +9,8 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,11 +21,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.petry.pdv.dono.repository.DonoRepository;
 import com.petry.pdv.funcionario.repository.FuncionarioRepository;
+import com.petry.pdv.login.UserTypes;
 import com.petry.pdv.login.entity.AtualizarSenha;
 import com.petry.pdv.login.entity.Login;
 import com.petry.pdv.login.repository.LoginRepository;
 import com.petry.pdv.login.service.LoginService;
 import com.petry.pdv.security.TokenService;
+import com.petry.pdv.utils.Constants;
 import com.petry.pdv.utils.ErrorResponse;
 import com.petry.pdv.utils.LoginResponse;
 import com.petry.pdv.utils.query.CustomQuery;
@@ -89,18 +84,20 @@ public class LoginController {
 	
 	@PostMapping
 	public ResponseEntity insert(@RequestBody Login login) {
-		login.setPrimeiroacesso(true);
+		login.setPrimeiroacesso(Constants.FlagSimOuNao.SIM);
 		//caso seja funcionario
-		if(login.getIdUser().contains("-")){
-			if(FuncionarioRepository.findById(login.getIdUser()).isPresent()) {
+		if(login.getFuncionario() != null){
+			if(FuncionarioRepository.findById(login.getFuncionario().getId()).isPresent()) {
 				return  service.save(login);
 			} else {
 				return new ResponseEntity<>(new ErrorResponse("Funcionario associado não encontrado!"), HttpStatus.NOT_FOUND);
 			}
-		}if(donoRepository.findById(Long.valueOf(login.getIdUser())).isPresent()) { //caso seja dono
+		}if(donoRepository.findById(Long.valueOf(login.getFuncionario().getId())).isPresent()) { 
 
 			return  new ResponseEntity<>(service.save(login), HttpStatus.OK);
-		} else {
+		}else if(login.getUserType().equals(UserTypes.ADMIN)) {
+			return  service.save(login);
+		}else {
 			return new ResponseEntity<>(new ErrorResponse("Dono associado não encontrado!"), HttpStatus.NOT_FOUND);
 		}
 			
@@ -121,11 +118,11 @@ public class LoginController {
 		
 		switch (in.getUserType()) {
 		case ADMIN: {			
-			return new ResponseEntity<>(Customrepository.buscarInfosAdmin(in.getUsuario(), token), HttpStatus.OK);
+			return new ResponseEntity<>(Customrepository.buscarInfosAdmin(in, token), HttpStatus.OK);
 		}
 		case DONO: {			
 			LoginResponse re = Customrepository.buscarInfosCliente(in.getUsuario(), token);
-			kafkaTemplate.send("login-dono-topic",UUID.randomUUID().toString(), "Produzido: " + re.getUsername());
+			//kafkaTemplate.send("login-dono-topic",UUID.randomUUID().toString(), "Produzido: " + re.getUsername());
 			return new ResponseEntity<>(Customrepository.buscarInfosCliente(in.getUsuario(), token), HttpStatus.OK);
 		}
 		case FUNCIONARIO: {
@@ -147,7 +144,7 @@ public class LoginController {
 		
 		switch (principal.getUserType()) {
 		case ADMIN: {			
-			return new ResponseEntity<>(Customrepository.buscarInfosAdmin(principal.getUsuario(), token), HttpStatus.OK);
+			return new ResponseEntity<>(Customrepository.buscarInfosAdmin(principal, token), HttpStatus.OK);
 		}
 		case DONO: {			
 			return new ResponseEntity<>(Customrepository.buscarInfosCliente(principal.getUsuario(), token), HttpStatus.OK);
