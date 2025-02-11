@@ -17,6 +17,6 @@ public class LoggingController {
 
 	@GetMapping
 	public String log() {
-		return "I'm Alive!@L";
+		return "I'm Alive!@Ls";
 	}
 }
