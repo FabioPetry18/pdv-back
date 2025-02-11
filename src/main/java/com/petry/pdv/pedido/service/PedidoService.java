@@ -126,26 +126,11 @@ public class PedidoService {
 
 
 	public ResponseEntity confirmPedido(PedidoProd pedido) {
-		 if (repository.existsById(pedido.getId().getNumeroPedido())) {
-			 	pedido.setStatus(2);
-				repository.save(pedido);
-	        } else {
-	    		return new ResponseEntity<>(new ErrorResponse("Pedido " + pedido.getId().getNumeroPedido() + " vinculado a loja " +pedido.getId().getIdlojaPedido()+ " não encontrado!"), HttpStatus.BAD_REQUEST);
-	        }
-	    
-		
-		return new ResponseEntity<>(new ErrorResponse("Erro ao confirmar pedido!"), HttpStatus.OK);
+		return null;
 	}
 	public ResponseEntity inativarPedido(PedidoProd pedido) {
-		if (repository.existsById(pedido.getId().getNumeroPedido())) {
-			pedido.setStatus(3);
-			repository.save(pedido);
-		} else {
-			return new ResponseEntity<>(new ErrorResponse("Pedido " + pedido.getId().getNumeroPedido()+ " vinculado a loja " +pedido.getId().getNumeroPedido()+ " não encontrado!"), HttpStatus.BAD_REQUEST);
-		}
-		
-		
-		return new ResponseEntity<>(new ErrorResponse("Erro ao cancelar pedido!"), HttpStatus.OK);
+		return null;
+
 	}
 	
 }

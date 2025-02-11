@@ -87,11 +87,8 @@ public class LoginController {
 		login.setPrimeiroacesso(Constants.FlagSimOuNao.SIM);
 		//caso seja funcionario
 		if(login.getFuncionario() != null){
-			if(FuncionarioRepository.findById(login.getFuncionario().getId()).isPresent()) {
 				return  service.save(login);
-			} else {
-				return new ResponseEntity<>(new ErrorResponse("Funcionario associado não encontrado!"), HttpStatus.NOT_FOUND);
-			}
+			
 		}if(donoRepository.findById(Long.valueOf(login.getFuncionario().getId())).isPresent()) { 
 
 			return  new ResponseEntity<>(service.save(login), HttpStatus.OK);

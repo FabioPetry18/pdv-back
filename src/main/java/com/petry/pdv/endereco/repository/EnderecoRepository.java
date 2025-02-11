@@ -6,8 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.petry.pdv.endereco.entity.Endereco;
+import com.petry.pdv.endereco.entity.EnderecoPK;
 
-public interface EnderecoRepository extends JpaRepository<Endereco, Long> {
+public interface EnderecoRepository extends JpaRepository<Endereco, EnderecoPK> {
  
 	
 	@Query(value = "SELECT IFNULL(MAX(id), 0) AS ultimo_id FROM endereco WHERE idcliente = ?1", nativeQuery = true)

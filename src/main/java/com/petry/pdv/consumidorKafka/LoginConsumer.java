@@ -1,4 +1,4 @@
-package com.petry.pdv.consumidor;
+package com.petry.pdv.consumidorKafka;
 
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.annotation.RetryableTopic;

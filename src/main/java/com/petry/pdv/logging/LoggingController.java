@@ -16,13 +16,7 @@ public class LoggingController {
     private static final Logger log = LoggerFactory.getLogger(FpMsPdvApplication.class);
 
 	@GetMapping
-	public void log() throws Exception {
-		log.trace("A TRACE Message");
-        log.debug("A DEBUG Message");
-        log.info("An INFO Message");
-        log.warn("A WARN Message");
-        log.error("An ERROR Message");
-        throw new Exception("Erro teste");
-		
+	public String log() {
+		return "I'm Alive!";
 	}
 }

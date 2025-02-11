@@ -20,7 +20,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/pdv
     username: root
-    password: 120312
+    password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:

@@ -7,13 +7,15 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.petry.pdv.produto.entity.Produto;
+import com.petry.pdv.produto.entity.ProdutoPK;
+
 import java.util.List;
 
 
 
 
 @Repository
-public interface ProdutoRepository extends JpaRepository<Produto, Long>{
+public interface ProdutoRepository extends JpaRepository<Produto, ProdutoPK>{
 	@Query(value = "SELECT * FROM PDV.PRODUTO WHERE codproduto = :produto", nativeQuery = true)
 	Produto findByID(@Param("produto") String produto);
 	

@@ -72,7 +72,7 @@ public class CustomQuery {
 
 		
 		response.forEach(p -> {
-			login.setId(user.getIdUser());
+			//login.setId(user.getIdUser());
 			login.setUsername(String.valueOf(p[0]));
 			login.setUserType(String.valueOf(p[1]));
 			login.setAcessos(acessos);

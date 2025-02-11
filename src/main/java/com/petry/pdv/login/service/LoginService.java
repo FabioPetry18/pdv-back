@@ -36,17 +36,8 @@ public class LoginService implements UserDetailsService{
 		   return new BCryptPasswordEncoder();
 		 }
 	public ResponseEntity save(Login login) {
-		Optional<Login> in = repository.findById(login.getIdUser());
 		login.setSenha(passwordEncoder().encode(login.getSenha()));	
-
-		if(in.isPresent()) {
-			return new ResponseEntity(new ErrorResponse("Usuário já cadastrado!"), HttpStatus.CONFLICT);
-		} else {
-			return new ResponseEntity(repository.save(login), HttpStatus.OK);
-
-		}
-		
-		 
+			return new ResponseEntity(new ErrorResponse("Usuário já cadastrado!"), HttpStatus.CONFLICT); 
 	}
 	public ResponseEntity updateSenha(AtualizarSenha user) {
 		

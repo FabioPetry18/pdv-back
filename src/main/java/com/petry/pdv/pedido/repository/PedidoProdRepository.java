@@ -10,9 +10,10 @@ import org.springframework.stereotype.Repository;
 
 import com.petry.pdv.pedido.dto.ProdutoResponse;
 import com.petry.pdv.pedido.entity.PedidoProd;
+import com.petry.pdv.pedido.entity.PedidoProdPK;
 
 @Repository
-public interface PedidoProdRepository extends JpaRepository<PedidoProd, Long>{
+public interface PedidoProdRepository extends JpaRepository<PedidoProd, PedidoProdPK>{
 	
 	@Query(value = "SELECT * FROM pedidoprod WHERE idlojapedido = ?1 AND DATE(dtpedido) = CURDATE() AND status = 1 ORDER BY numpedido DESC",
 	        countQuery = "SELECT COUNT(*) FROM pedido WHERE idloja = ?1 AND DATE(dtpedido) = CURDATE() AND status = 1",

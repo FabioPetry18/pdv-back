@@ -23,7 +23,7 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 @CrossOrigin("*")
-	@Data
+@Data
 @Entity
 @Table(schema = "pdv", name = "login") 
 public class Login implements UserDetails{

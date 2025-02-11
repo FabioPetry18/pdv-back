@@ -49,5 +49,4 @@ public class Proprietario {
     @JoinColumn(name = "login_id", nullable = false, unique = true)
     private Login login;
     
-    
 }

@@ -37,14 +37,7 @@ public class FuncionarioController {
 	}
 	@PostMapping
 	public ResponseEntity save(@RequestBody Funcionario funcionario) {
-		String result = UUID.nameUUIDFromBytes((funcionario.getIdLoja()+funcionario.getNome()).getBytes()).toString();
-		Optional<Funcionario> func = repository.findById(result);
-		if(func.isPresent()) {
-			return new ResponseEntity(new ErrorResponse("Usuário com a combinação loja e nome já vinculado!"), HttpStatus.CONFLICT);
-		}else {			
-			funcionario.setId(result);
-			return new ResponseEntity(service.saveFuncionario(funcionario), HttpStatus.OK);
-		}
+		return new ResponseEntity(service.saveFuncionario(funcionario), HttpStatus.OK);
 	}
 	
 //	@PutMapping
