@@ -67,34 +67,4 @@ public class ProprietarioController {
 		return  service.update(dto);
 	}
 	
-
-	
-	
-	private Login donoAssinaturaToLogin(DonoAssinatura dono, Proprietario donoCreate) {
-		Login login = new Login();
-	    login.setUsuario(dono.getNome().trim().concat(".").concat(dono.getSobrenome().trim()));
-	    login.setPrimeiroacesso(Constants.FlagSimOuNao.SIM);
-	    login.setSenha(dono.getSenha());
-	    login.setAcessos(Acessos.TodosOsAcessos.getLabel());
-	    login.setUserType(UserTypes.DONO);
-	    //login.setIdUser(donoCreate.getId().toString());
-		    
-		return login;
-	}
-	private Assinatura donoAssinaturaToAssinatura(DonoAssinatura dto, Proprietario donoCreate) {
-		Assinatura assis = new Assinatura();
-		assis.setId(donoCreate.getId());
-		assis.setQtdLojas(dto.getQtdLojas());
-		
-		return assis;
-		
-	}
-	private Proprietario donoAssinaturaToDono(DonoAssinatura dto) {
-		Proprietario dono = new Proprietario();
-		dono.setNome(dto.getNome());
-		dono.setSobrenome(dto.getSobrenome());
-		return dono;
-	}
-	
-	
 }
