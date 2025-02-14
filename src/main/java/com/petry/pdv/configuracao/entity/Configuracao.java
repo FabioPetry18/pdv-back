@@ -1,11 +1,16 @@
 package com.petry.pdv.configuracao.entity;
 
-import com.petry.pdv.dono.entity.Proprietario;
-import com.petry.pdv.loja.entity.Loja;
-import jakarta.persistence.*;
-import lombok.Data;
+import com.petry.pdv.utils.DiaSemanaEnum;
 
-import java.util.Date;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.Data;
 
 @Data
 @Entity
@@ -15,23 +20,14 @@ public class Configuracao {
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
 
-        @OneToOne(fetch = FetchType.LAZY)
-        @JoinColumn(name = "idloja")
-        private Loja loja;
+        @Column(name = "habertura")
+        private Integer abertura = 8;
 
-        @Column(name = "permissao")
-        private boolean funcionarioPermitido;
+        @Column(name = "hfechamento")
+        private Integer fechamento = 18;
 
-        @Column(name = "aberturacaixa")
-        private boolean aberturaDoCaixa;
-
-        @Column(name = "dtAberturaLoja")
-        private Date dataAberturaLoja;
-
-        @Column(name = "dtFechamentoLoja")
-        private Date dataFechamentoLoja;
-
-        @Column(name = "diasSemana")
-        private String diasSemana;
+        @Column(name = "dia_semana")
+        @Enumerated(EnumType.STRING)
+        private DiaSemanaEnum diasSemana = DiaSemanaEnum.QUARTA;
 
 }

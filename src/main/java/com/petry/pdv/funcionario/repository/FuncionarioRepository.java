@@ -9,6 +9,6 @@ import com.petry.pdv.funcionario.entity.Funcionario;
 import java.util.List;
 
 @Repository
-public interface FuncionarioRepository extends JpaRepository<Funcionario, String> {
+public interface FuncionarioRepository extends JpaRepository<Funcionario, Long> {
 		List<Funcionario> findByIdLoja(Long idLoja);
 }

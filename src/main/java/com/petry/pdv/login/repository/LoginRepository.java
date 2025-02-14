@@ -6,14 +6,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
 import com.petry.pdv.login.entity.Login;
+import java.util.List;
+
 
 @Repository
 public interface LoginRepository extends JpaRepository<Login, String>{
-
-
-	//Login findByUsuarioAndSenha(String usuario, String senha);
 	
 	UserDetails findByUsuario(String login);
 	
 	@Query(name = "select * from pdv.login where usuario = ?1", nativeQuery = true)
-    Login findLoginByUsuario(String user);}
+    Login findLoginByUsuario(String user);
+	
+
+}

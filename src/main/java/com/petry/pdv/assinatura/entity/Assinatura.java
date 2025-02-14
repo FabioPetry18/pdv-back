@@ -2,15 +2,11 @@ package com.petry.pdv.assinatura.entity;
 
 import java.util.Date;
 
-import com.petry.pdv.dono.entity.Proprietario;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -42,9 +38,6 @@ public class Assinatura {
     private Date dataUltimoPagamento; // inicio e fechamento do plano
 
     @Column(name = "status", columnDefinition = "CHAR(1) DEFAULT 'N' CHECK (status IN ('S', 'N'))", nullable = false)
-    private boolean status;
-    
- 
-    @OneToOne(mappedBy = "assinatura")
-    private Proprietario proprietario;
+    private String status;
+
 }

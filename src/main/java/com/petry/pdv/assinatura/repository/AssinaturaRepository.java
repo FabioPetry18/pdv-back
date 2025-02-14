@@ -1,13 +1,11 @@
 package com.petry.pdv.assinatura.repository;
 
 
-import com.petry.pdv.assinatura.entity.Assinatura;
-
-import com.petry.pdv.dono.entity.Proprietario;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import com.petry.pdv.assinatura.entity.Assinatura;
 
 @Repository
 public interface AssinaturaRepository extends JpaRepository<Assinatura, Long> {

@@ -2,12 +2,15 @@ package com.petry.pdv.loja.service;
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.petry.pdv.dono.entity.Proprietario;
+import com.petry.pdv.loja.dto.LojaDTO;
 import com.petry.pdv.loja.entity.Loja;
 import com.petry.pdv.loja.repository.LojaRepository;
+import com.petry.pdv.proprietario.entity.Proprietario;
+import com.petry.pdv.proprietario.repository.ProprietarioRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -18,15 +21,25 @@ public class LojaService {
 	@Autowired
 	private LojaRepository repository;
 	
-
+	@Autowired
+	private ProprietarioRepository donoRepository;
 	
-	public List<Loja> getAll(){
-		return repository.findAll();
+	private final ModelMapper mapper = new ModelMapper();
+	
+	public List<Loja> getAll(Long proprietarioid){
+		return repository.findByProprietarioId(proprietarioid);
 	}
 
-	public Loja add(Loja loja) {	
-		Loja loj =  repository.save(loja);
-		return loj;
+	public Loja add(LojaDTO loja, Long proprietarioid) {	
+		Loja loj = new Loja();
+		if(donoRepository.existsById(proprietarioid)) {
+			mapper.typeMap(LojaDTO.class, Loja.class);
+			loj = mapper.map(loja, Loja.class);
+			loj.setProprietario(new Proprietario());
+			loj.getProprietario().setId(proprietarioid);
+			loj.getConfiguracao().setId(null);
+		}
+		return repository.save(loj);
 		
 	}
 

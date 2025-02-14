@@ -2,32 +2,29 @@
 package com.petry.pdv.loja.controller;
 
 import java.util.List;
-import java.util.Optional;
 
-import com.petry.pdv.exceptions.PdvException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.petry.pdv.dono.entity.Proprietario;
-import com.petry.pdv.dono.repository.DonoRepository;
-import com.petry.pdv.dono.service.DonoService;
+import com.petry.pdv.loja.dto.LojaDTO;
 import com.petry.pdv.loja.entity.Loja;
 import com.petry.pdv.loja.service.LojaService;
-import com.petry.pdv.utils.ErrorResponse;
+import com.petry.pdv.proprietario.service.ProprietarioService;
 
 @RestController
 @RequestMapping("/loja")
 public class LojaController {
 	@Autowired
-	private DonoService donoService;
+	private ProprietarioService donoService;
 	
 	@Autowired
 	private LojaService lojaService;
@@ -37,20 +34,14 @@ public class LojaController {
 
 
 
-	@GetMapping
-	public List<Loja> getAll(){
-		return lojaService.getAll();
+	@GetMapping("{proprietarioid}")
+	public List<Loja> getAll(@PathVariable Long proprietarioid){
+		return lojaService.getAll(proprietarioid);
 	}
 	
-	@PostMapping
-	public ResponseEntity insert(@RequestBody Loja loja) {
-		ResponseEntity dono = donoService.verificarPlano(loja.getIdDono());
-		if(dono.getStatusCode() == HttpStatus.OK) {
-			donoService.diminuirLojaPlano(loja.getIdDono());
-			return new ResponseEntity(lojaService.add(loja), HttpStatus.OK);
-		} else {
-			return new ResponseEntity(dono.getBody(), HttpStatus.OK);
-		}
+	@PostMapping("{proprietarioid}")
+	public ResponseEntity insert(@RequestBody LojaDTO loja, @PathVariable Long proprietarioid ) {
+		return new ResponseEntity<>(lojaService.add(loja, proprietarioid), HttpStatus.CREATED);
 
 	}
 

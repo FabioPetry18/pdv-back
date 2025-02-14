@@ -1,13 +1,9 @@
 package com.petry.pdv.loja.entity;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.petry.pdv.configuracao.entity.Configuracao;
+import com.petry.pdv.proprietario.entity.Proprietario;
 
-import com.petry.pdv.dono.entity.Proprietario;
-import com.petry.pdv.estoque.entity.Estoque;
-import com.petry.pdv.funcionario.entity.Funcionario;
-import com.petry.pdv.produto.entity.Produto;
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -16,15 +12,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 import lombok.Data;
 @Data
 @Entity
 @Table(schema = "pdv", name = "loja")
 public class Loja {
-	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -32,21 +26,35 @@ public class Loja {
 	@Column(name = "nome")
 	private String nome;
 	
-	@Column(name = "iddono")
-	private Long idDono;
-    
-	@Transient
-    private List<Produto> produtos;
-    
-	@Transient 
-	private List<Funcionario> funcionarios = new ArrayList<>();
-    
-	@Transient
-	private List<Estoque> estoques;
-    
-//    @OneToMany(mappedBy = "loja")
-//    private List<Pedido> pedidos;
-    
-    
+	@Column(name = "endereco")
+	private String endereco;
 	
+	@Column(name = "bairro")
+	private String bairro;
+	
+	@Column(name = "rua")
+	private String rua;
+	
+	@Column(name = "numero")
+	private String numero;
+	
+	@Column(name = "cep",length = 8)
+	private String cep;
+	
+	@Column(name = "uf")
+	private String uf;
+	
+	@Column(name = "cidade")
+	private String cidade;
+	
+	@Column(name = "telefone")
+	private Long telefone;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "proprietario_id")
+	private Proprietario proprietario;
+	
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "configuracao_id", nullable = false, unique = true)
+    private Configuracao configuracao;
 }

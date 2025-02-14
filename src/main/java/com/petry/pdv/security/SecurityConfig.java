@@ -34,36 +34,36 @@ public class SecurityConfig  {
     	   .cors(cors -> cors.configurationSource(corsConfigurationSource())) 
            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
            .authorizeHttpRequests(authorize -> authorize
-        		   .requestMatchers(HttpMethod.POST, "/login").permitAll()
-        		   .requestMatchers(HttpMethod.POST, "/login/autenticar").permitAll()
-        		   .requestMatchers(HttpMethod.GET, "/pedido/sse").permitAll()
-        		   .requestMatchers(HttpMethod.GET, "/pedido/sse/*").permitAll()
-        		   .requestMatchers(HttpMethod.GET, "/log").permitAll()
-        		   
-        		   .requestMatchers(HttpMethod.GET, "/pedido/**").hasRole("DONO")
-
-        		   
-        		   .requestMatchers(HttpMethod.GET, "/pedido/**").hasRole("DONO")
-        		   .requestMatchers(HttpMethod.PUT, "/pedido/*").hasRole("DONO")
-        		   .requestMatchers(HttpMethod.DELETE, "/pedido/*").hasRole("DONO")
-        		   .requestMatchers(HttpMethod.POST, "/pedido/*").hasRole("DONO")
-        		   .requestMatchers(HttpMethod.GET, "/login/autenticar").hasRole("DONO")
-
-
-        		   .requestMatchers(HttpMethod.GET, "/estoque").hasRole("ADMIN")
-        		   .requestMatchers(HttpMethod.POST, "/assinatura").permitAll()
-        		   .requestMatchers(HttpMethod.POST, "/dono").hasRole("ADMIN")
-        		   .requestMatchers(HttpMethod.POST, "/dono/acesso").hasRole("ADMIN")
-        		   .requestMatchers(HttpMethod.GET, "/login/autenticar").hasRole("ADMIN")
-
-        		   .requestMatchers(HttpMethod.GET, "/produto").hasRole("FUNCIONARIO")
-        		   .requestMatchers(HttpMethod.GET, "/produto/*").hasRole("FUNCIONARIO")
-        		   .requestMatchers(HttpMethod.POST, "/produto").hasRole("FUNCIONARIO")
-        		   .requestMatchers(HttpMethod.GET, "/login/autenticar").hasRole("FUNCIONARIO")
-
-				   .requestMatchers(HttpMethod.POST, "/caixa").hasRole("CLIENTE")
-				   .requestMatchers(HttpMethod.GET, "/caixa").hasRole("CLIENTE") 
-				   .anyRequest().authenticated()
+//        		   .requestMatchers(HttpMethod.POST, "/login").permitAll()
+//        		   .requestMatchers(HttpMethod.POST, "/login/autenticar").permitAll()
+//        		   .requestMatchers(HttpMethod.GET, "/pedido/sse").permitAll()
+//        		   .requestMatchers(HttpMethod.GET, "/pedido/sse/*").permitAll()
+//        		   .requestMatchers(HttpMethod.GET, "/log").permitAll()
+//        		   
+//        		   .requestMatchers(HttpMethod.GET, "/pedido/**").hasRole("DONO")
+//
+//        		   
+//        		   .requestMatchers(HttpMethod.GET, "/pedido/**").hasRole("DONO")
+//        		   .requestMatchers(HttpMethod.PUT, "/pedido/*").hasRole("DONO")
+//        		   .requestMatchers(HttpMethod.DELETE, "/pedido/*").hasRole("DONO")
+//        		   .requestMatchers(HttpMethod.POST, "/pedido/*").hasRole("DONO")
+//        		   .requestMatchers(HttpMethod.GET, "/login/autenticar").hasRole("DONO")
+//
+//
+//        		   .requestMatchers(HttpMethod.GET, "/estoque").hasRole("ADMIN")
+//        		   .requestMatchers(HttpMethod.POST, "/assinatura").permitAll()
+//        		   .requestMatchers(HttpMethod.POST, "/dono").hasRole("ADMIN")
+//        		   .requestMatchers(HttpMethod.POST, "/dono/acesso").hasRole("ADMIN")
+//        		   .requestMatchers(HttpMethod.GET, "/login/autenticar").hasRole("ADMIN")
+//
+//        		   .requestMatchers(HttpMethod.GET, "/produto").hasRole("FUNCIONARIO")
+//        		   .requestMatchers(HttpMethod.GET, "/produto/*").hasRole("FUNCIONARIO")
+//        		   .requestMatchers(HttpMethod.POST, "/produto").hasRole("FUNCIONARIO")
+//        		   .requestMatchers(HttpMethod.GET, "/login/autenticar").hasRole("FUNCIONARIO")
+//
+//				   .requestMatchers(HttpMethod.POST, "/caixa").hasRole("CLIENTE")
+//				   .requestMatchers(HttpMethod.GET, "/caixa").hasRole("CLIENTE") 
+				   .anyRequest().permitAll()
 		   )
 		   .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
            .build();

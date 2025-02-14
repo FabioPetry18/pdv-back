@@ -1,4 +1,4 @@
-package com.petry.pdv.dono.entity;
+package com.petry.pdv.proprietario.entity;
 
 import java.util.Date;
 

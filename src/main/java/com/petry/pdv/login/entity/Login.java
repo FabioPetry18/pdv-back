@@ -8,7 +8,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-import com.petry.pdv.dono.entity.Proprietario;
 import com.petry.pdv.funcionario.entity.Funcionario;
 import com.petry.pdv.login.UserTypes;
 
@@ -17,15 +16,16 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @CrossOrigin("*")
 @Data
 @Entity
 @Table(schema = "pdv", name = "login") 
+@NoArgsConstructor
 public class Login implements UserDetails{
 	
 	private static final long serialVersionUID = 1L;
@@ -46,9 +46,7 @@ public class Login implements UserDetails{
     @Column(name = "userType")
     @Enumerated(EnumType.STRING)
     private UserTypes userType ;
-    
-    @OneToOne(mappedBy = "login")
-    private Proprietario proprietario;
+
 
     @OneToOne(mappedBy = "login")
     private Funcionario funcionario;
@@ -97,6 +95,12 @@ public class Login implements UserDetails{
 		// TODO Auto-generated method stub
 		return true;
 	}
+
+	public Login(String usuario) {
+		this.usuario = usuario;
+	}
+	
+	
    
 
 }

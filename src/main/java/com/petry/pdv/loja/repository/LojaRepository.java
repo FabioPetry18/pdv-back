@@ -1,5 +1,7 @@
 package com.petry.pdv.loja.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,5 +17,8 @@ public interface LojaRepository extends JpaRepository<Loja, Long>{
 
 	@Query(value = "SELECT * FROM loja WHERE id = ?", nativeQuery = true)
 	Loja existsByIdLoja(Long id);
+	
+    List<Loja> findByProprietarioId(Long proprietarioId);
+
 		
 }
