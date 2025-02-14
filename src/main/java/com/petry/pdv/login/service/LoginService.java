@@ -32,6 +32,13 @@ public class LoginService implements UserDetailsService{
 	public List<Login> getAll(){
 		return repository.findAll();
 	}
+	
+	public boolean validateUsuario(String usuarioid) {
+		return repository.existsById(usuarioid);
+	}
+	
+	
+	
 	public PasswordEncoder passwordEncoder(){
 		   return new BCryptPasswordEncoder();
 		 }

@@ -27,7 +27,5 @@ public class Funcionario {
 	
     @OneToOne
     @JoinColumn(name = "login_id", nullable = false, unique = true)
-    private Login login;
-	
-	
+    private Login login;	
 }

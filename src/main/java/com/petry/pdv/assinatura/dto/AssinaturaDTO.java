@@ -7,6 +7,7 @@ import lombok.Data;
 
 @Data
 public class AssinaturaDTO {
+    private Long id;
     private int qtdLojas;
     private Date dataAbertura = new Date();
     private Date dataFechamento;

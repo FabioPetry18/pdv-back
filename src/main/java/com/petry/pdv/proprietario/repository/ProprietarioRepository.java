@@ -1,5 +1,9 @@
 package com.petry.pdv.proprietario.repository;
 
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -16,5 +20,7 @@ public interface ProprietarioRepository extends JpaRepository<Proprietario, Long
 	
 
 	Proprietario findByLogin(Login login);
+	
+	Page<Proprietario> findByTelefone(Long telefone,Pageable pageable);
 	
 }

@@ -4,12 +4,17 @@ package com.petry.pdv.proprietario.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.petry.pdv.assinatura.entity.Assinatura;
@@ -36,23 +41,34 @@ public class ProprietarioController {
 	LoginService loginService;
 	
 	
-	
-//	@PostMapping
-//	public Proprietario insert(@RequestBody Proprietario dono) {		
-//		return service.save(dono);		
-//	}
-	@PostMapping("/all")
+
+	@PostMapping
 	public ResponseEntity insertDonoWithAssinaturaAndLogin(@RequestBody ProprietarioDTO proprietario) {
 		return new ResponseEntity(service.save(proprietario), HttpStatus.OK);
 	}
 	
 	
-	
-	
 	@GetMapping
-	public  List<DonoAssinatura> getAll() {
+	public  List<ProprietarioDTO> getAll() {
 		return service.getAll();
 	}
+	
+	@GetMapping("paginator")
+	public Page<Proprietario> paginator(
+			@RequestParam(defaultValue = "1", required = true) int page,
+			@RequestParam(defaultValue = "1", required = true) int size,
+			@RequestParam(defaultValue = "1", required = true) String telefone
+			) {
+		return  service.paginator(page, size, telefone);
+	}
+	
+	@PutMapping()
+	public ProprietarioDTO editar(@RequestBody ProprietarioDTO dto) {
+		return  service.update(dto);
+	}
+	
+
+	
 	
 	private Login donoAssinaturaToLogin(DonoAssinatura dono, Proprietario donoCreate) {
 		Login login = new Login();

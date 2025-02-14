@@ -42,7 +42,10 @@ public class Proprietario {
    	private String sobrenome;    
     
     @Column(name = "telefone")
-    private Long telefone;    
+    private Long telefone;  
+    
+    @Column(name = "status", columnDefinition = "VARCHAR(10) DEFAULT 'Ativo' CHECK (status IN ('Ativo', 'Inativo'))", nullable = false)
+    private String status;
     
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "assinatura_id", nullable = false, unique = true)
