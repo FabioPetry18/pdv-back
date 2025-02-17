@@ -34,7 +34,7 @@ public class LoginService implements UserDetailsService{
 	}
 	
 	public boolean validateUsuario(String usuarioid) {
-		return repository.existsById(usuarioid);
+		return repository.findLoginByUsuario(usuarioid) != null;
 	}
 	
 	
@@ -46,18 +46,7 @@ public class LoginService implements UserDetailsService{
 		login.setSenha(passwordEncoder().encode(login.getSenha()));	
 			return new ResponseEntity(new ErrorResponse("Usuário já cadastrado!"), HttpStatus.CONFLICT); 
 	}
-	public ResponseEntity updateSenha(AtualizarSenha user) {
-		
-		if(repository.existsById(user.getUsuario())) {
-			Optional<Login> login = repository.findById(user.getUsuario());
-			login.get().setSenha(passwordEncoder().encode(user.getSenha()));
-			login.get().setPrimeiroacesso(Constants.FlagSimOuNao.NAO);
-			return new ResponseEntity<>(repository.save(login.get()), HttpStatus.OK);			
-		}
-		
-		return new ResponseEntity<>(user, HttpStatus.BAD_REQUEST);			
-	}
-
+	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		return repository.findByUsuario(username);

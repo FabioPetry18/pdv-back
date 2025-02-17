@@ -69,40 +69,11 @@ public class LoginController {
 		return service.getAll();
 		
 	}
+	
 	@GetMapping("validate/{usuarioid}")
 	public boolean validateUsuario(@PathVariable String usuarioid) {
 		return  service.validateUsuario(usuarioid);
 	}	
-	
-	
-	@PutMapping
-	public ResponseEntity updateSenha(@RequestBody AtualizarSenha user) {
-		
-		try {
-			return service.updateSenha(user);
-		} catch (Exception e) {
-			return new ResponseEntity(user, HttpStatus.BAD_REQUEST);			
-		}
-	}
-	
-//	@PostMapping
-//	public ResponseEntity insert(@RequestBody Login login) {
-//		login.setPrimeiroacesso(Constants.FlagSimOuNao.SIM);
-//		//caso seja funcionario
-//		if(login.getFuncionario() != null){
-//				return  service.save(login);
-//			
-//		}if(donoRepository.findById(Long.valueOf(login.getFuncionario().getId())).isPresent()) { 
-//
-//			return  new ResponseEntity<>(service.save(login), HttpStatus.OK);
-//		}else if(login.getUserType().equals(UserTypes.ADMIN)) {
-//			return  service.save(login);
-//		}else {
-//			return new ResponseEntity<>(new ErrorResponse("Dono associado não encontrado!"), HttpStatus.NOT_FOUND);
-//		}
-//			
-//	}
-//	
 	
 	@PostMapping("/autenticar")
 	public ResponseEntity autenticar(@RequestBody LoginSenhaDTO login) {	 
@@ -119,34 +90,10 @@ public class LoginController {
 		    throw new AccessDeniedException("Usuário ou senha inválidos", ex);
 		}
 	}
-//	
-//	@GetMapping("/autenticar")
-//	public ResponseEntity autenticarToken(HttpServletRequest request) {
-//		Login principal = (Login) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        String token = request.getHeader("Authorization").replaceAll("Bearer", "").trim();
-//
-//		
-//		switch (principal.getUserType()) {
-//		case ADMIN: {			
-//			return new ResponseEntity<>(Customrepository.buscarInfosAdmin(principal, token), HttpStatus.OK);
-//		}
-//		case DONO: {			
-//			return new ResponseEntity<>(Customrepository.buscarInfosCliente(principal.getUsuario(), token), HttpStatus.OK);
-//		}
-//		case FUNCIONARIO: {
-//			
-//			break;
-//		}
-//		default:
-//			return new ResponseEntity<>(new ErrorResponse("Role não configurada!"), HttpStatus.NOT_FOUND);
-//		}
-//		return new ResponseEntity(new ErrorResponse("Erro inesperado na autenticação!"), HttpStatus.NOT_FOUND);
-//		
-//	}
+
 }
 
 
-//public record LoginResponseDTO(Long userId, List<Loja> lojas, Integer qtdLojas, boolean isAdmin, List<Acessos> acessos ,String token) {
 
 
     

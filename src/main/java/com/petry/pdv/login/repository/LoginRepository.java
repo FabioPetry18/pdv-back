@@ -10,7 +10,7 @@ import java.util.List;
 
 
 @Repository
-public interface LoginRepository extends JpaRepository<Login, String>{
+public interface LoginRepository extends JpaRepository<Login, Long>{
 	
 	UserDetails findByUsuario(String login);
 	
