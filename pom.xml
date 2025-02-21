@@ -83,6 +83,8 @@
 		    <artifactId>logstash-logback-encoder</artifactId>
 		    <version>7.4</version>
 		</dependency>
+		
+
 		<!-- https://mvnrepository.com/artifact/co.elastic.apm/apm-agent-attach -->
 		<dependency>
 		    <groupId>co.elastic.apm</groupId>

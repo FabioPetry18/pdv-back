@@ -7,14 +7,13 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum DiaSemanaEnum {
-	 	SEGUNDA("SEGUNDA", "Segunda"),
-	    TERCA("TERÇA", "Terça"),
-	    QUARTA("QUARTA", "Quarta"),
-	    QUINTA("QUINTA", "Quinta"),
-	    SEXTA("SEXTA", "Sexta");
+	 	SEGUNDA("Segunda"),
+	    TERCA("Terça"),
+	    QUARTA("Quarta"),
+	    QUINTA("Quinta"),
+	    SEXTA("Sexta");
 
 	    private String nome;
-	    private String descricao;
 
 
 	 

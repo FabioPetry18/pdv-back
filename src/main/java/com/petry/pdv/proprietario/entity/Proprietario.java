@@ -52,11 +52,16 @@ public class Proprietario {
     private Assinatura assinatura;
     
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "login_id", nullable = false, unique = true)
+    @JoinColumn(name = "login_id", referencedColumnName = "id", nullable = false, unique = true)
     private Login login;
     
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "proprietario_id")
+    @OneToMany(mappedBy = "proprietario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Loja> lojas;
+
+	public Proprietario(Long id) {
+		this.id = id;
+	}
+    
+    
     
 }

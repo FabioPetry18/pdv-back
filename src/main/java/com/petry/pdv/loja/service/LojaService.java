@@ -1,11 +1,14 @@
 package com.petry.pdv.loja.service;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.petry.pdv.configuracao.entity.Configuracao;
 import com.petry.pdv.loja.dto.LojaDTO;
 import com.petry.pdv.loja.entity.Loja;
 import com.petry.pdv.loja.repository.LojaRepository;
@@ -22,25 +25,30 @@ public class LojaService {
 	private LojaRepository repository;
 	
 	@Autowired
-	private ProprietarioRepository donoRepository;
+	private ProprietarioRepository proprietarioRepository;
 	
 	private final ModelMapper mapper = new ModelMapper();
 	
-	public List<Loja> getAll(Long proprietarioid){
-		return repository.findByProprietarioId(proprietarioid);
+	public List<LojaDTO> getAll(Long proprietarioid) {
+	    List<Loja> lojas = repository.findByProprietarioId(proprietarioid);
+	    mapper.typeMap(Loja.class, LojaDTO.class);
+	    
+	    return lojas.stream()
+	                .map(loja -> mapper.map(loja, LojaDTO.class))
+	                .collect(Collectors.toList());
 	}
 
-	public Loja add(LojaDTO loja, Long proprietarioid) {	
+	public LojaDTO add(LojaDTO dto, Long proprietarioid) throws Exception {	
 		Loja loj = new Loja();
-		if(donoRepository.existsById(proprietarioid)) {
+		if(proprietarioRepository.existsById(proprietarioid)) {
 			mapper.typeMap(LojaDTO.class, Loja.class);
-			loj = mapper.map(loja, Loja.class);
-			loj.setProprietario(new Proprietario());
-			loj.getProprietario().setId(proprietarioid);
-			loj.getConfiguracao().setId(null);
+			loj = mapper.map(dto, Loja.class);
+			loj.setProprietario(new Proprietario(proprietarioid));
+			loj.setConfiguracao(Arrays.asList(new Configuracao(null, "Permite cupom", "false")));
+			repository.save(loj);
+			return dto;
 		}
-		return repository.save(loj);
-		
+		throw new Exception("Proprietario não cadastrado");
 	}
 
 	public boolean buscarPorId(Long id) {
