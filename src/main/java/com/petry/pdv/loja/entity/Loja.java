@@ -1,6 +1,9 @@
 package com.petry.pdv.loja.entity;
 
+import java.util.List;
+
 import com.petry.pdv.configuracao.entity.Configuracao;
+import com.petry.pdv.horarioFuncionamento.entity.HorarioFuncionamento;
 import com.petry.pdv.proprietario.entity.Proprietario;
 
 import jakarta.persistence.CascadeType;
@@ -12,6 +15,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -54,7 +58,11 @@ public class Loja {
     @JoinColumn(name = "proprietario_id")
 	private Proprietario proprietario;
 	
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "configuracao_id", nullable = false, unique = true)
-    private Configuracao configuracao;
+	 @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true) 
+	 @JoinColumn(name = "loja_id")
+	 private List<Configuracao> configuracao;
+    
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true) 
+    @JoinColumn(name = "loja_id")
+    private List<HorarioFuncionamento> horarios;
 }

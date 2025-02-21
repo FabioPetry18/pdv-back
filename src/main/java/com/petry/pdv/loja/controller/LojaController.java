@@ -30,42 +30,16 @@ public class LojaController {
 	private LojaService lojaService;
 
 
-
-
-
-
 	@GetMapping("{proprietarioid}")
-	public List<Loja> getAll(@PathVariable Long proprietarioid){
+	public List<LojaDTO> getAll(@PathVariable Long proprietarioid){
 		return lojaService.getAll(proprietarioid);
 	}
 	
 	@PostMapping("{proprietarioid}")
-	public ResponseEntity insert(@RequestBody LojaDTO loja, @PathVariable Long proprietarioid ) {
+	public ResponseEntity insert(@RequestBody LojaDTO loja, @PathVariable Long proprietarioid ) throws Exception {
 		return new ResponseEntity<>(lojaService.add(loja, proprietarioid), HttpStatus.CREATED);
 
 	}
 
-
-
-
-	@PutMapping
-	public ResponseEntity update(@RequestBody Loja loja) {
-		if(lojaService.buscarPorId(loja.getId())) {
-			 return new ResponseEntity(lojaService.update(loja), HttpStatus.OK);
-		}
-
-		return new ResponseEntity<>("Erro ao atualizar a loja", HttpStatus.NOT_FOUND);
-	}
-	
-	@DeleteMapping
-	public ResponseEntity<?> delete(@RequestBody Loja loja) {
-		if(lojaService.buscarPorId(loja.getId())) {
-			lojaService.delete(loja);
-			 return ResponseEntity.ok(loja);
-		}
-		
-		return new ResponseEntity<>("Erro ao deletar a loja", HttpStatus.NOT_FOUND);
-	} 
-	
 	
 }

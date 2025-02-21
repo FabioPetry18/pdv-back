@@ -1,6 +1,9 @@
 package com.petry.pdv.loja.dto;
 
+import java.util.List;
+
 import com.petry.pdv.configuracao.dto.ConfiguracaoDTO;
+import com.petry.pdv.horarioFuncionamento.dto.HorarioFuncionamentoDTO;
 
 import lombok.Data;
 
@@ -16,6 +19,6 @@ public class LojaDTO {
 	private String uf;
 	private String cidade;
 	private Long telefone;
-	private ConfiguracaoDTO configuracao;
-	
+	private List<HorarioFuncionamentoDTO> horarios;
+	private List<ConfiguracaoDTO> configuracao;
 }

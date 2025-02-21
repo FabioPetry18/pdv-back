@@ -16,6 +16,7 @@ public class ProprietarioDTO {
 	private String nome;   
    	private String sobrenome;    
     private Long telefone;    
+    private String status;    
     private AssinaturaDTO assinatura;
     private LoginDTO login;
     private List<LojaDTO> lojas;
