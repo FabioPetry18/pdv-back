@@ -1,10 +1,12 @@
 package com.petry.pdv.proprietario.entity;
 
 import java.util.List;
+import java.util.Set;
 
 import com.petry.pdv.assinatura.entity.Assinatura;
 import com.petry.pdv.login.entity.Login;
 import com.petry.pdv.loja.entity.Loja;
+import com.petry.pdv.utils.BasicEntity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -29,11 +31,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Proprietario {
-    
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Proprietario extends BasicEntity {
     
     @Column(name = "nome")
 	private String nome;   
@@ -44,9 +42,6 @@ public class Proprietario {
     @Column(name = "telefone")
     private Long telefone;  
     
-    @Column(name = "status", columnDefinition = "VARCHAR(10) DEFAULT 'Ativo' CHECK (status IN ('Ativo', 'Inativo'))", nullable = false)
-    private String status;
-    
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "assinatura_id", nullable = false, unique = true)
     private Assinatura assinatura;
@@ -55,13 +50,6 @@ public class Proprietario {
     @JoinColumn(name = "login_id", referencedColumnName = "id", nullable = false, unique = true)
     private Login login;
     
-    @OneToMany(mappedBy = "proprietario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<Loja> lojas;
-
-	public Proprietario(Long id) {
-		this.id = id;
-	}
-    
-    
-    
+    @OneToMany(mappedBy = "proprietario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Loja> lojas;
 }

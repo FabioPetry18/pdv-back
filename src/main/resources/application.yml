@@ -7,7 +7,11 @@ server:
 #  file:
 #    path: C:\log\elk-log.log
 #  config: classpath:logback.xml
-
+aws:
+  endpoint: https://7003b027295ca0996b1795014cf2e5fc.r2.cloudflarestorage.com
+  access-key: 10f3c463c468c649ff6fcdef447ae352
+  secret-key: 9a7666ca0b8f5ea1e11e0bd7bcae83a72c30db68d3f7ba76b3844335f35574bb
+  bucket-name: pdv-dev
 management:
   endpoints:
     web:
@@ -26,7 +30,7 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
-    open-in-view: true
+    open-in-view: false
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect

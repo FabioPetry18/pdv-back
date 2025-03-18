@@ -12,7 +12,7 @@ import lombok.Data;
 @Builder
 public class LoginComRelacionamentoDTO {
     private String usuario;
-    //private String senha;
+    private String senha;
     private String  primeiroacesso;
     private String acessos;
     private UserTypes userType ;

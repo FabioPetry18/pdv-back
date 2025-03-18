@@ -1,6 +1,7 @@
 package com.petry.pdv.proprietario.dto;
 
 import java.util.List;
+import java.util.Set;
 
 import com.petry.pdv.assinatura.dto.AssinaturaDTO;
 import com.petry.pdv.login.dto.LoginDTO;
@@ -19,6 +20,6 @@ public class ProprietarioResponseDTO {
     private AssinaturaDTO assinatura;
     private LoginDTO login;
     private String token;
-    private List<LojaDTO> lojas;
+    private Set<LojaDTO> lojas;
 
 }

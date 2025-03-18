@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ import com.petry.pdv.assinatura.entity.Assinatura;
 import com.petry.pdv.assinatura.service.AssinaturaService;
 import com.petry.pdv.login.dto.LoginDTO;
 import com.petry.pdv.login.entity.Login;
+import com.petry.pdv.loja.dto.LojaDTO;
+import com.petry.pdv.loja.entity.Loja;
+import com.petry.pdv.proprietario.dto.ProprietarioAtualizacaoDTO;
 import com.petry.pdv.proprietario.dto.ProprietarioDTO;
 import com.petry.pdv.proprietario.entity.DonoAssinatura;
 import com.petry.pdv.proprietario.entity.Proprietario;
@@ -40,18 +44,20 @@ public class ProprietarioService {
 	
 	@Autowired
 	AssinaturaService assinaturaService;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
 
 	
     private final ModelMapper mapper = new ModelMapper();
     
     
-    public PasswordEncoder passwordEncoder(){
-		   return new BCryptPasswordEncoder();
-		 }
+   
 	
 		public Proprietario save(ProprietarioDTO dto) {
 			dto.setId(null);
-			dto.getLogin().setSenha(passwordEncoder().encode(dto.getLogin().getSenha()));
+			dto.getLogin().setSenha(passwordEncoder.encode(dto.getLogin().getSenha()));
 			mapper.typeMap(LoginDTO.class, Login.class);
 			return repository.save(mapper.map(dto, Proprietario.class));
 		}
@@ -82,12 +88,17 @@ public class ProprietarioService {
 				return proprietarios;
 			}
 
-		public ProprietarioDTO update(ProprietarioDTO dto) {
-				if(repository.existsById(dto.getId())) {
-					mapper.typeMap(ProprietarioDTO.class, Proprietario.class);
-					repository.save(mapper.map(dto, Proprietario.class));					
-					return null;
-				}
-				return null;
-		}	
+		public ProprietarioDTO update(Long id, ProprietarioAtualizacaoDTO dto) throws Exception {
+		    Proprietario entity = repository.findById(id)
+		        .orElseThrow(() -> new Exception("Não encontrado"));
+
+		    mapper.map(dto, entity);
+
+		    repository.save(entity);
+		    
+		    // Retornar DTO completo
+		    return mapper.map(entity, ProprietarioDTO.class);
+		}
+
+	
 }

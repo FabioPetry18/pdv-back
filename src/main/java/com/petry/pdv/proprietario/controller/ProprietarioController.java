@@ -23,6 +23,7 @@ import com.petry.pdv.login.UserTypes;
 import com.petry.pdv.login.entity.Acessos;
 import com.petry.pdv.login.entity.Login;
 import com.petry.pdv.login.service.LoginService;
+import com.petry.pdv.proprietario.dto.ProprietarioAtualizacaoDTO;
 import com.petry.pdv.proprietario.dto.ProprietarioDTO;
 import com.petry.pdv.proprietario.entity.DonoAssinatura;
 import com.petry.pdv.proprietario.entity.Proprietario;
@@ -62,9 +63,9 @@ public class ProprietarioController {
 		return  service.paginator(page, size, telefone);
 	}
 	
-	@PutMapping()
-	public ProprietarioDTO editar(@RequestBody ProprietarioDTO dto) {
-		return  service.update(dto);
+	@PutMapping("{id}")
+	public ProprietarioDTO editar(	@PathVariable Long id,@RequestBody ProprietarioAtualizacaoDTO dto) throws Exception {
+		return  service.update(id, dto);
 	}
 	
 }

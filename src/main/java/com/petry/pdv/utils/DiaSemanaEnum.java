@@ -11,7 +11,9 @@ public enum DiaSemanaEnum {
 	    TERCA("Terça"),
 	    QUARTA("Quarta"),
 	    QUINTA("Quinta"),
-	    SEXTA("Sexta");
+	    SEXTA("Sexta"),
+	    SABADO("Sabado"),
+	    DOMINGO("Domingo");
 
 	    private String nome;
 
