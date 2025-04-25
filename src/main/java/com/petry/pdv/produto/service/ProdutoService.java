@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.petry.pdv.adicional.dto.AdicionalDTO;
 import com.petry.pdv.adicional.entity.Adicional;
@@ -68,17 +69,17 @@ public class ProdutoService {
 		repository.save(entity);
 		return dto;
 	}
-	public ProdutoDTO save(ProdutoRecord produtoRecord) {
+	public ProdutoDTO save(ProdutoDTO dto, MultipartFile imagem) {
 	  String profileImageUrl = s3Service.uploadFile(
-			  	produtoRecord.productFile(),
+			  imagem,
                 UUID.randomUUID().toString());
 		
-		produtoRecord.dto().setImagem(profileImageUrl);
+	  	dto.setImagem(profileImageUrl);
 		mapper.typeMap(ProdutoDTO.class, Produto.class);
 		mapper.typeMap(AdicionalDTO.class, Adicional.class);
-		Produto entity = mapper.map(produtoRecord.dto(), Produto.class);
+		Produto entity = mapper.map(dto, Produto.class);
 		repository.save(entity);
-		return produtoRecord.dto();
+		return dto;
 	}
 	 public PageResponse<ProdutoDTO> buscarProdutosPaginados(int page, int size, Long idLoja) {
 	        Pageable pageable = PageRequest.of(page - 1, size);

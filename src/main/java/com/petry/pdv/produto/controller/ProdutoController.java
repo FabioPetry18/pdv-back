@@ -5,9 +5,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,9 +19,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.petry.pdv.produto.dto.ProdutoDTO;
 import com.petry.pdv.produto.dto.ProdutoRecord;
 import com.petry.pdv.produto.service.ProdutoService;
@@ -33,7 +41,7 @@ public class ProdutoController {
 	private ProdutoService produtoService;
 	
     private static final String DIRETORIO_UPLOAD = "uploads/";
-
+    private final ModelMapper mapper = new ModelMapper();
 	
 	 @PostMapping("/upload")
 	    public ResponseEntity<String> uploadImagem(@RequestParam("file") MultipartFile file) {
@@ -68,11 +76,18 @@ public class ProdutoController {
         return ResponseEntity.ok(produtoService.buscarProdutoCodigoProduto(idproduto));
     }
 	 
-     @PostMapping(consumes = "multipart/form-data")
-	 public ProdutoDTO add(@ModelAttribute ProdutoRecord produtoRecord) {
-		return produtoService.save(produtoRecord);
-		 
-	 }
+	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public ProdutoDTO add(
+	        @RequestPart("produto") String produtoJson,
+	        @RequestPart(value = "productFile", required = false) MultipartFile productFile) throws JsonMappingException, JsonProcessingException {
+		
+		ObjectMapper objectMapper = new ObjectMapper()
+			    .registerModule(new JavaTimeModule())  
+			    .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		 ProdutoDTO dto = objectMapper.readValue(produtoJson, ProdutoDTO.class);
+
+	    return produtoService.save(dto, productFile);
+	}
 	 
 	 @PutMapping
 	 public ResponseEntity putMethodName( @RequestBody ProdutoDTO dto) throws Exception {	 	

@@ -1,12 +1,9 @@
 package com.petry.pdv.loja.entity;
 
-import java.util.List;
 import java.util.Set;
 
 import com.petry.pdv.configuracao.entity.Configuracao;
 import com.petry.pdv.horarioFuncionamento.entity.HorarioFuncionamento;
-import com.petry.pdv.pedido.entity.Pedido;
-import com.petry.pdv.produto.entity.Produto;
 import com.petry.pdv.proprietario.entity.Proprietario;
 
 import jakarta.persistence.CascadeType;
@@ -19,9 +16,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 @Getter
@@ -41,7 +36,6 @@ public class Loja {
 	
 	@Column(name = "bairro")
 	private String bairro;
-	
 	
 	@Column(name = "numero")
 	private String numero;

@@ -38,7 +38,6 @@ public class Produto extends LojaBasicEntity {
 	@Column(name = "imagem")	
 	private String imagem;
 	
-	
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
         name = "produto_adicional", 

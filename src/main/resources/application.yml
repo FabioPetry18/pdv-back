@@ -9,9 +9,14 @@ server:
 #  config: classpath:logback.xml
 aws:
   endpoint: https://7003b027295ca0996b1795014cf2e5fc.r2.cloudflarestorage.com
-  access-key: 10f3c463c468c649ff6fcdef447ae352
-  secret-key: 9a7666ca0b8f5ea1e11e0bd7bcae83a72c30db68d3f7ba76b3844335f35574bb
+  public-url: https://pub-65e4316836954e4eb210737ca89dd090.r2.dev
+  public-url-css: https://pub-65e4316836954e4eb210737ca89dd090.r2.dev
+  #access-key: 10f3c463c468c649ff6fcdef447ae352
+  #secret-key: 9a7666ca0b8f5ea1e11e0bd7bcae83a72c30db68d3f7ba76b3844335f35574bb
+  access-key: 65bc406857ff890e9cd67e6e9a5cdaed
+  secret-key: 4a24b728980b474e3b5be066b1e65b496eb488f4a1f1be9aef3b42a901b3dcdd
   bucket-name: pdv-dev
+  bucket-name-css: tema-css
 management:
   endpoints:
     web:

@@ -19,17 +19,23 @@ public class S3Service {
 	
  	@Autowired
     private S3Client s3Client;
-
+ 	
+    @Value("${aws.bucket-name-css}")
+    private String bucketNameCss;
+ 	
     @Value("${aws.bucket-name}")
     private String bucketName;
 
-    @Value("${aws.endpoint}")
+    @Value("${aws.public-url}")
     private String endpoint;
+    
+    @Value("${aws.public-url-css}")
+    private String endpointcss;
 	    
     public String uploadFile(MultipartFile file, String entityFile) {
         try {
             // Criar um nome de arquivo único com extensão
-            String fileName = entityFile + "-" + UUID.randomUUID() + getFileExtension(file.getOriginalFilename());
+            String fileName = UUID.randomUUID() + getFileExtension(file.getOriginalFilename());
 
             // Criar a requisição de upload
             PutObjectRequest objectRequest = PutObjectRequest.builder()
@@ -40,11 +46,34 @@ public class S3Service {
 
             s3Client.putObject(objectRequest, RequestBody.fromBytes(file.getBytes()));
 
-            return endpoint + "/" + bucketName + "/" + fileName;
+            return endpoint + "/" + fileName;
         } catch (Exception e) {
-            throw new RuntimeException("Erro ao fazer upload do arquivo", e);
+        	return "Erro ao salvar imagem";
         }
     }
+    public String uploadCss(String conteudoCss, String nomeArquivo) {
+        try {
+            // Se o nome do arquivo não terminar com ".css", adicionamos a extensão
+            String fileName = nomeArquivo.endsWith(".css") ? nomeArquivo : nomeArquivo + ".css";
+
+            // Cria a requisição para o upload
+            PutObjectRequest objectRequest = PutObjectRequest.builder()
+                .bucket(bucketNameCss)  // Nome do bucket no R2 ou S3
+                .key("temas/" + fileName)  // Caminho e nome do arquivo no bucket (ex: temas/cliente123.css)
+                .contentType("text/css")  // Tipo de conteúdo (MIME Type para CSS)
+                .build();
+
+            // Faz o upload da String de CSS para o R2/S3
+            s3Client.putObject(objectRequest, RequestBody.fromString(conteudoCss));
+
+            // Retorna a URL pública do arquivo (pode ser usado para acessar o CSS depois)
+            return endpoint + "/temas/" + fileName;  // Exemplo de retorno: https://r2.example.com/temas/cliente123.css
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao fazer upload do CSS", e);  // Trata erros de upload
+        }
+    }
+
+
 
 	 private File convertMultiPartFileToFile(MultipartFile file) {
 	        File convertedFile = new File(file.getOriginalFilename());

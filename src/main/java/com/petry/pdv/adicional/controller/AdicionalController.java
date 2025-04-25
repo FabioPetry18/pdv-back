@@ -26,6 +26,15 @@ public class AdicionalController {
 	public ResponseEntity findAll(@PathVariable Long idloja, @PathVariable Long idproduto,  @RequestParam(defaultValue = "", required = false) String param) {
 		return new ResponseEntity(service.listarAdicionais(idloja, idproduto, param), HttpStatus.OK);
 	}
+	
+	@GetMapping("/{idloja}/paginator")
+	public ResponseEntity paginator(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @PathVariable Long idloja ){
+		return new ResponseEntity(service.buscarAdicionaisPaginados(page, size, idloja), HttpStatus.OK);
+	}
+	
 	@PostMapping("/{idloja}")
 	public ResponseEntity findAll(@PathVariable Long idloja, @RequestBody AdicionalDTO adicional) {
 		return new ResponseEntity(service.save(idloja, adicional), HttpStatus.OK);
