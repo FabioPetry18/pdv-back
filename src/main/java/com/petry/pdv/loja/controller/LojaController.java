@@ -40,6 +40,11 @@ public class LojaController {
 		return new ResponseEntity<>(lojaService.add(loja, proprietarioid), HttpStatus.CREATED);
 
 	}
+	@PutMapping("{proprietarioid}")
+	public ResponseEntity update(@RequestBody LojaDTO loja, @PathVariable Long proprietarioid ) throws Exception {
+		return new ResponseEntity<>(lojaService.update(loja, proprietarioid), HttpStatus.OK);
+
+	}
 
 	
 }

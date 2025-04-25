@@ -45,6 +45,21 @@ public class LojaService {
 			repository.save(loj);
 			return dto;
 	}
+	
+	public LojaDTO update(LojaDTO dto, Long proprietarioid) throws Exception {	
+		Loja loj = new Loja();
+		if(dto.getId() == null) {
+			throw new RuntimeException("O campo 'ID' é requisito para a edição da loja.");
+		}
+		Proprietario entity = proprietarioRepository.findById(proprietarioid).orElseThrow(() -> new Exception("Proprietario não cadastrado"));
+		Proprietario proprietario = new Proprietario();
+		proprietario.setId(entity.getId());
+		mapper.typeMap(LojaDTO.class, Loja.class);
+		loj = mapper.map(dto, Loja.class);
+		loj.setProprietario(proprietario);
+		repository.save(loj);
+		return dto;
+	}
 
 	public boolean buscarPorId(Long id) {
 		return repository.buscarPorId(id.toString()) == 1 ? true : false;
